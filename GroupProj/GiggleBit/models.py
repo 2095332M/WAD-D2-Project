@@ -18,7 +18,11 @@ class image(models.models):
     uploader = models.ForeignKey(user)
     Category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
+    slug = models.SlugField(unique=True)
+
+    def save(self,*args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
@@ -43,3 +47,7 @@ class Category(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class liked(models.Model):
+    user = models.ForeignKey(user)
+    image = models.ForeignKey(image)
