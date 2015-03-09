@@ -8,10 +8,10 @@ from GiggleBit.models import Image
 
 #super sick home page
 def index(request):
-    
-    new_images = Image.objects.order_by(-'upload_date')[:16]
-    content_dict = {'newimages': new_images}
-    return HttpResponse(request, new_images)
+
+    new_images = Image.objects.order_by('-upload_date')[:10]
+    content_dict = {'new_images': new_images}
+    return render(request,'gigglebit/index.html',content_dict)
 
 #similar/same as /category/ in rango
 def tilde(request):
@@ -20,7 +20,7 @@ def tilde(request):
 
 #like add_page but needs to deal with multiple ~'s per image
 #and is accesible from all other pages
-def add_image(request): 
+def add_image(request):
     return HttpResponse("IMPLEMENT ME")
 
 
@@ -43,5 +43,3 @@ def search(request):
 #About Page
 def about(request):
     return HttpRespone("Produced by Stephen McMorran, Dillon Stevenson, Stuart Mackle and Kelvin Fowler")
-
-

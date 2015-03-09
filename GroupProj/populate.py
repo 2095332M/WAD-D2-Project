@@ -6,6 +6,7 @@ import django
 django.setup()
 
 from GiggleBit.models import *
+from datetime import datetime
 
 image_loc = 'static/images/test.jpg'
 
@@ -59,7 +60,7 @@ def add_user(username,password,bio="test"):
     return u
 
 def add_image(name,uploader,Cat,views=0):
-    i = image.objects.get_or_create(name=name,uploader=uploader,picture = image_loc, views=views)[0]
+    i = Image.objects.get_or_create(name=name,uploader=uploader,picture = image_loc, views=views,upload_date = datetime.now() )[0]
     i.Category.add(Cat)
     return i
 

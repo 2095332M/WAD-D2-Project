@@ -1,4 +1,4 @@
-{% extends 'rango/base.html' %}
+{% extends 'gigglebit/base.html' %}
 
 {% load staticfiles %}
 
@@ -10,7 +10,7 @@
     </div>
     {% if new_images %}
         {% for image in new_images %}
-            <img  width="100" height="100" src="{% image %}" alt="IMG" />
+            <img  width="100" height="100" src="{ image.picture }" alt="IMG" />
         {% endfor %}
     {% else %}
     <strong>There are no pictures present.</strong>
