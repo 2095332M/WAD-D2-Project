@@ -9,9 +9,9 @@ from GiggleBit.models import Image
 #super sick home page
 def index(request):
 
-    new_images = Image.objects.order_by('-upload_date')[:10]
+    new_images = Image.objects.all()
     content_dict = {'new_images': new_images}
-    return render(request,'gigglebit/index.html',content_dict)
+    return render(request,'gigglebit/index.html', content_dict)
 
 #similar/same as /category/ in rango
 def tilde(request):

@@ -8,7 +8,8 @@ django.setup()
 from GiggleBit.models import *
 from datetime import datetime
 
-image_loc = 'static/images/test.jpg'
+BASE_DIR = os.path.dirname(__file__)
+image_loc = os.path.join(BASE_DIR,'/static/images/test.jpg')
 
 def populate():
 
