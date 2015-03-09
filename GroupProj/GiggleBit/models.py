@@ -22,13 +22,14 @@ class Category(models.Model):
         self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
 
-class image(models.Model):
+class Image(models.Model):
     name = models.CharField(max_length=128, unique=True)
     picture = models.ImageField(upload_to="images")
     uploader = models.ForeignKey(User)
     Category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
+    upload_date = models.DateTimeField()
 
     def save(self,*args, **kwargs):
         self.slug = slugify(self.name)
@@ -39,7 +40,7 @@ class image(models.Model):
 
 class comment(models.Model):
     user = models.ForeignKey(User)
-    image = models.ForeignKey(image)
+    image = models.ForeignKey(Image)
     comment = models.CharField(max_length=512)
 
     def __unicode__(self):
@@ -48,7 +49,7 @@ class comment(models.Model):
 
 class liked(models.Model):
     user = models.ForeignKey(User)
-    image = models.ForeignKey(image)
+    image = models.ForeignKey(Image)
 
 class fav_category(models.Model):
     user = models.ForeignKey(User)

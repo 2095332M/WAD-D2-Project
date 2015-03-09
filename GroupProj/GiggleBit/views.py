@@ -1,12 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from GiggleBit.models import Image
+
 #CHAPTER 19 of rango book is basically essential for our app.
 
 
 #super sick home page
 def index(request):
-    return HttpResponse("IMPLEMENT ME")
+    
+    new_images = Image.objects.order_by(-'upload_date')[:16]
+    content_dict = {'newimages': new_images}
+    return HttpResponse(request, new_images)
 
 #similar/same as /category/ in rango
 def tilde(request):
