@@ -14,8 +14,18 @@ def index(request):
     return render(request,'gigglebit/index.html', content_dict)
 
 #similar/same as /category/ in rango
-def tilde(request):
-    return HttpResponse("IMPLEMENT ME")
+def tilde(request,tilde_slug):
+    
+    content_dict = {}
+    category = Category.objects.get(slug = tilde_slug)
+    try:
+        content_dict['category_name'] = category.name
+        tilde_images = Image.objects.get(category = category)
+        content_dict['images'] = tilde_images
+        content_dict['category'] = category
+    except Category.DoesNotExist:
+        pass
+    return render(request,'gigglebit/tilde.html', content_dict)
 
 
 #like add_page but needs to deal with multiple ~'s per image
