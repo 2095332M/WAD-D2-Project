@@ -24,13 +24,17 @@ class Category(models.Model):
 
 class Image(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    picture = models.ImageField(upload_to="images")
+    picture = models.ImageField(upload_to=get_path)
     uploader = models.ForeignKey(User)
     Category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     upload_date = models.DateTimeField()
-
+    
+    
+    def get_path(instance, filename):
+        return '%s/photos/%s' % (instance.uploader.username, filename)
+    
     def save(self,*args, **kwargs):
         self.slug = slugify(self.name)
         super(Image, self).save(*args, **kwargs)
