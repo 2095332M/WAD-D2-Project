@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from GiggleBit.models import Image
+from GiggleBit.models import Image, Category
 
 #CHAPTER 19 of rango book is basically essential for our app.
 
@@ -17,11 +17,11 @@ def index(request):
 def tilde(request,tilde_slug):
     
     content_dict = {}
-    category = Category.objects.get(slug = tilde_slug)
+    category = Category.objects.get(slug=tilde_slug)
     try:
         content_dict['category_name'] = category.name
-        tilde_images = Image.objects.get(category = category)
-        content_dict['images'] = tilde_images
+        tilde_images = Image.objects.get(category=category)
+        content_dict['tilde_images'] = tilde_images
         content_dict['category'] = category
     except Category.DoesNotExist:
         pass

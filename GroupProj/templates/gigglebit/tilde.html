@@ -1,0 +1,23 @@
+{% extends 'gigglebit/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Category{% endblock %}
+
+{% block body_block %}
+    <div class="page-header">
+        <h1>{{category_name}}</h1>
+    </div>
+    <div>
+        {% if images %}
+            {% for image in tilde_images %}
+                <img  width="100" height="100" src="{{ image.picture.url }}" alt="IMG" />
+                {{ image.name }}
+                {% endfor %}
+        {% else %}
+            No images in category
+        {% endif %}
+    </div>
+
+
+{% endblock %}
