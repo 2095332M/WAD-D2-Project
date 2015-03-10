@@ -9,6 +9,11 @@ class userprofile(models.Model): #additional user stuff
     # The additional attributes we wish to include.
     profile_pic = models.ImageField(upload_to='profile_images')
     bio = models.CharField(max_length=512)
+    slug = models.SlugField(unique=True)
+
+    def save(self,*args, **kwargs):
+        self.slug = slugify(self.user.name)
+        super(userprofile, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.user.username
@@ -24,17 +29,13 @@ class Category(models.Model):
 
 class Image(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    picture = models.ImageField(upload_to=get_path)
+    picture = models.ImageField(upload_to="images")
     uploader = models.ForeignKey(User)
     Category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     upload_date = models.DateTimeField()
-    
-    
-    def get_path(instance, filename):
-        return '%s/photos/%s' % (instance.uploader.username, filename)
-    
+
     def save(self,*args, **kwargs):
         self.slug = slugify(self.name)
         super(Image, self).save(*args, **kwargs)
