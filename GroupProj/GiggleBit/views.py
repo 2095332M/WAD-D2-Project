@@ -52,4 +52,4 @@ def search(request):
 
 #About Page
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'gigglebit/about.html')
