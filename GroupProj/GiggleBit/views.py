@@ -15,7 +15,7 @@ def index(request):
 
 #similar/same as /category/ in rango
 def tilde(request,tilde_slug):
-    
+
     content_dict = {}
     category = Category.objects.get(slug=tilde_slug)
     try:
@@ -35,7 +35,9 @@ def add_image(request):
 
 
 #image/unique_identifier/ one for each image, need random id creator
-def image(request):
+def image(request,image_slug):
+    image = Image.objects.get(slug=image_slug)
+    #content_dict = {'name' = image.name,'pic'=image.picture,'uploader'=image.uploader.username}
     return HttpResponse("IMPLEMENT ME")
 
 
