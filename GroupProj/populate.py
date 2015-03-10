@@ -14,22 +14,32 @@ image_loc = os.path.join(BASE_DIR,'/static/images/test.jpg')
 def populate():
 
     names = "abcdefghij"
-
+    #Makes it easier to test views rather than a-j
+    
     cats =[]
-    for x in range(10):
-        cats += [add_cat(names[x])]
-
+    cats += [add_cat("Linux", 10)]
+    cats += [add_cat("Mac", 5)]
+    cats += [add_cat("Windows", 6)]
+    cats += [add_cat("Java", 7)]
+    cats += [add_cat("Python", 8)]
+    
     users = []
-    users += [add_user("a","a")]
-    users += [add_user("b","b")]
-
+    users += [add_user("Dylan","123")]
+    users += [add_user("Kelvin","456")]
+    users += [add_user("Stuart","abc")]
+    users += [add_user("Stephen","def")]
+    
+    image_names = ["bug", "IDE", "noob", "gaming"]
     images =[]
-    for user in users:
-        for x in range(5):
-            if user.username == "b":
-                images += [add_image(names[x+5],user,cats[x+5])]
-            else:
-                images += [add_image(names[x],user,cats[x])]
+    for i,user in enumerate(users):
+        images += [add_image(image_names[i],user,cats[i])]
+
+    #for user in users:
+    #    for x in range(5):
+    #        if user.username == "b":
+    #            images += [add_image(names[x+5],user,cats[x+5])]
+    #        else:
+    #            images += [add_image(names[x],user,cats[x])]
 
     for x in range(len(images)):
             if x%3==0:
