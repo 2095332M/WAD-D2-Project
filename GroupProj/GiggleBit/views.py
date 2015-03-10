@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from GiggleBit.models import Image, Category
+from GiggleBit.models import *
 
 #CHAPTER 19 of rango book is basically essential for our app.
 
@@ -36,9 +36,12 @@ def add_image(request):
 
 #image/unique_identifier/ one for each image, need random id creator
 def image(request,image_slug):
+    content_dict = {}
     image = Image.objects.get(slug=image_slug)
-    #content_dict = {'name' = image.name,'pic'=image.picture,'uploader'=image.uploader.username}
-    return HttpResponse("IMPLEMENT ME")
+    content_dict["image"] = image
+    content_dict["comments"] = comment.objects.all().filter(image=image)
+    content_dict["likes"] = len(liked.objects.all().filter(image=image))
+    return render(request,"gigglebit/image.html",content_dict)
 
 
 #REDIRECT PAGE for each image to track page views for sorting/displaying algorithms

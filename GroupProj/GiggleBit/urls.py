@@ -5,4 +5,5 @@ urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
         url(r'^about/$', views.about, name='about'),
         url(r'^~/(?P<tilde_slug>[-\w]+)/$', views.tilde, name='tilde'),
+        url(r'^image/(?P<image_slug>[\w\-]+)/$', views.image, name='image'),
         )

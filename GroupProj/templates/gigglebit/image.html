@@ -1,0 +1,43 @@
+{% extends 'gigglebit/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Index/Home{% endblock %}
+
+{% block body_block %}
+  <div class="page-header">
+    <center>
+      <h1>
+        {{image.name}}
+      </h1>
+    </center>
+  </div>
+  <div>
+    <div>
+      <center>
+        <img src="{{ image.picture.url }}" alt="IMG" />
+      </center>
+    </div>
+    <center>
+      <div>
+        <!-can't implement adding comments till logon is implemented ->
+        <!- need to implement the like buttent here prob with a form->
+        {{ likes }} likes
+      </div>
+      <div>
+        {% if comments %}
+          {% for comment in comments %}
+            <div>
+              <!-can't implement adding comments till logon is implemented ->
+              {{ comment.comment }}
+            </div>
+          {% endfor %}
+        {% else %}
+          no comments
+        {% endif %}
+      </div>
+    </center>
+  <div>
+
+
+{% endblock %}

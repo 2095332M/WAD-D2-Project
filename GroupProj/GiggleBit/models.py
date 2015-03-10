@@ -12,7 +12,7 @@ class userprofile(models.Model): #additional user stuff
     slug = models.SlugField(unique=True)
 
     def save(self,*args, **kwargs):
-        self.slug = slugify(self.user.name)
+        self.slug = slugify(self.user.username)
         super(userprofile, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -36,7 +36,7 @@ class Image(models.Model):
     #when not logged in will have to implement extra eroor cheacking
     picture = models.ImageField(upload_to = lambda instance, filename: 'images/{0}/{1}'.format(instance.uploader.username, filename))
     #also i want to point out this is very hacky and bad
-    category = models.ManyToManyField(Category)
+    Category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     upload_date = models.DateTimeField()
