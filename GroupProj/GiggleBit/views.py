@@ -52,4 +52,4 @@ def search(request):
 
 #About Page
 def about(request):
-    return HttpRespone("Produced by Stephen McMorran, Dillon Stevenson, Stuart Mackle and Kelvin Fowler")
+    return render(request, 'about.html')
