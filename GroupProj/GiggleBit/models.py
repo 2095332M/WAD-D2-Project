@@ -36,7 +36,7 @@ class Image(models.Model):
     #when not logged in will have to implement extra eroor cheacking
     picture = models.ImageField(upload_to = lambda instance, filename: 'images/{0}/{1}'.format(instance.uploader.username, filename))
     #also i want to point out this is very hacky and bad
-    Category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     upload_date = models.DateTimeField()
