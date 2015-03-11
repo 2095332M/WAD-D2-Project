@@ -18,6 +18,15 @@
         <img src="{{ image.picture.url }}" alt="IMG" />
       </center>
     </div>
+    <div>
+        {% if tildes %}
+            {% for tilde in tildes %}
+                <li><a href="{% url 'tilde'  tilde.slug %}">{{ tilde.name }}</a></li>
+            {% endfor %}
+        {% else %}
+            You have found a dead image. Oh no!
+        {% endif %}
+    </div>
     <center>
       <div>
         <!-can't implement adding comments till logon is implemented ->

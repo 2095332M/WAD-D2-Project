@@ -38,9 +38,10 @@ def add_image(request):
 def image(request,image_slug):
     content_dict = {}
     image = Image.objects.get(slug=image_slug)
+    content_dict['tildes'] = image.category.all()
     content_dict["image"] = image
-    content_dict["comments"] = comment.objects.all().filter(image=image)
-    content_dict["likes"] = len(liked.objects.all().filter(image=image))
+    content_dict["comments"] = comment.objects.filter(image=image)
+    content_dict["likes"] = len(liked.objects.filter(image=image))
     return render(request,"gigglebit/image.html",content_dict)
 
 
