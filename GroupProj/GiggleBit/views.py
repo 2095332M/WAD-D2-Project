@@ -20,7 +20,7 @@ def tilde(request,tilde_slug):
     category = Category.objects.get(slug=tilde_slug)
     try:
         content_dict['category_name'] = category.name
-        tilde_images = Image.objects.get(category=category)
+        tilde_images = Image.objects.filter(category=category)
         content_dict['tilde_images'] = tilde_images
         content_dict['category'] = category
     except Category.DoesNotExist:
