@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'GiggleBit',
+    'registration'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -66,6 +67,12 @@ ROOT_URLCONF = 'GroupProj.urls'
 
 WSGI_APPLICATION = 'GroupProj.wsgi.application'
 
+#regastrion
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/gigglebit/'  
+LOGIN_URL = '/accounts/login/'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

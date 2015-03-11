@@ -1,6 +1,11 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from registration.backends.simple.views import RegistrationView
+
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self,request, user):
+        return '/gigglebit/'
 
 urlpatterns = patterns('',
     # Examples:
@@ -9,6 +14,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^gigglebit/', include('GiggleBit.urls')),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
 )
 if settings.DEBUG:
     urlpatterns += patterns(
