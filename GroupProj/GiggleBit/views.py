@@ -5,11 +5,13 @@ from GiggleBit.models import *
 
 #CHAPTER 19 of rango book is basically essential for our app.
 
-
 #super sick home page
 def index(request):
 
-    new_images = Image.objects.all()
+    all_images = Image.objects.all()[0:16]
+    #Proper one, getting rid for testing
+    #new_images = [all_images[0:4],all_images[4:8],all_images[8:12],all_images[12:16]]
+    new_images = [all_images[0:4],all_images[0:4],all_images[0:4],all_images[0:4]]
     content_dict = {'new_images': new_images}
     return render(request,'gigglebit/index.html', content_dict)
 

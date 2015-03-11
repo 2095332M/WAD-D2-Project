@@ -8,14 +8,15 @@
     <div class="page-header">
         <h1>Popular on GiggleBit Today</h1>
     </div>
-
     {% if new_images %}
-        {% for image in new_images %}
-            <a href="{% url 'image'  image.slug %}"><img  width="100" height="100" src="{{ image.picture.url }}" alt="IMG" /></a></li>
-            {{ image.name }}
+        {% for image_list in new_images %}
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                    {% for image in image_list %}
+                        <div ><a href="{% url 'image'  image.slug %}" class="thumbnail"><img src="{{image.picture.url}}" alt="IMG"></a></div>
+                    {% endfor %}
+        </div>
         {% endfor %}
     {% else %}
-            <strong>There are no pictures present.</strong>
+        <strong>There are no pictures present.</strong>
     {% endif %}
-
 {% endblock %}
