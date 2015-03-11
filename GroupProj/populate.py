@@ -15,20 +15,20 @@ def populate():
 
     names = "abcdefghij"
     #Makes it easier to test views rather than a-j
-    
+
     cats =[]
     cats += [add_cat("Linux", 10)]
     cats += [add_cat("Mac", 5)]
     cats += [add_cat("Windows", 6)]
     cats += [add_cat("Java", 7)]
     cats += [add_cat("Python", 8)]
-    
+
     users = []
     users += [add_user("Dylan","123")]
     users += [add_user("Kelvin","456")]
     users += [add_user("Stuart","abc")]
     users += [add_user("Stephen","def")]
-    
+
     image_names = ["bug", "IDE", "noob", "gaming"]
     images =[]
     for i,user in enumerate(users):
@@ -72,7 +72,7 @@ def add_user(username,password,bio="test"):
 
 def add_image(name,uploader,Cat,views=0):
     i = Image.objects.get_or_create(name=name,uploader=uploader,picture = image_loc, views=views,upload_date = datetime.now() )[0]
-    i.Category.add(Cat)
+    i.category.add(Cat)
     return i
 
 def add_comment(user,image,com="test"):
