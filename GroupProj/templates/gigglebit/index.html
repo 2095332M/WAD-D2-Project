@@ -11,7 +11,7 @@
 
     {% if new_images %}
         {% for image in new_images %}
-            <img  width="100" height="100" src="{{ image.picture.url }}" alt="IMG" />
+            <a href="{% url 'image'  image.slug %}"><img  width="100" height="100" src="{{ image.picture.url }}" alt="IMG" /></a></li>
             {{ image.name }}
         {% endfor %}
     {% else %}
