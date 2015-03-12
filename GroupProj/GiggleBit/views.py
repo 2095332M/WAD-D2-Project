@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from operator import attrgetter
+
 from GiggleBit.models import *
 
 #CHAPTER 19 of rango book is basically essential for our app.
 
 #super sick home page
-def index(request):
-
-    all_images = Image.objects.all()[0:16]
+def index(request,filter='new'):
+    all_images = sorted(Image.objects.all(),key=attrgetter('upload_date'),reverse=True)[:16]
     #Proper one, getting rid for testing
     #new_images = [all_images[0:4],all_images[4:8],all_images[8:12],all_images[12:16]]
     new_images = [all_images[0:4],all_images[0:4],all_images[0:4],all_images[0:4]]
