@@ -10,10 +10,16 @@
     </div>
     <div class="fluid-container">
         {% if tilde_images %}
-            {% for image in tilde_images %}
-                <img  width="100" height="100" src="{{ image.picture.url }}" alt="IMG" />
-                {{ image.name }}
+            {% for image_group in tilde_images %}
+                <div class = "row">
+                {% for image in image_group %}
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" class = " img-responsive" alt="IMG"></a>
+                    </div>
                 {% endfor %}
+                </div>
+                <br><br>
+            {% endfor %}
         {% else %}
             No images in category
         {% endif %}
