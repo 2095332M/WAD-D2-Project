@@ -3,11 +3,17 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 # Create your models here.
 
+def get_path(instance,filname):
+        return 'images/{0}/{1}'.format(instance.uploader.username, filename)
+
+def get_prof_pic_path(instance,filname):
+        return 'profile_images/{0}/{1}'.format(instance.uploader.username, filename)
+
 class userprofile(models.Model): #additional user stuff
     user = models.OneToOneField(User)
 
     # The additional attributes we wish to include.
-    profile_pic = models.ImageField(upload_to=lambda instance, filename: 'profile_images{0}/{1}'.format(instance.uploader.username, filename))
+    profile_pic = models.ImageField(upload_to=get_prof_pic_path)
     bio = models.CharField(max_length=512)
     slug = models.SlugField(unique=True)
 
@@ -28,13 +34,14 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
 class Image(models.Model):
+
     name = models.CharField(max_length=128, unique=True)
     uploader = models.ForeignKey(User)
     #uploader now must be defind in the form before the image and a user is
     #required to upload so we can have anemuse uploads
     #may cause random crashing if user is not defend eg if a pic if draged to upload
     #when not logged in will have to implement extra eroor cheacking
-    picture = models.ImageField(upload_to = lambda instance, filename: 'images/{0}/{1}'.format(instance.uploader.username, filename))
+    picture = models.ImageField(upload_to = get_path)
     #also i want to point out this is very hacky and bad
     category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
