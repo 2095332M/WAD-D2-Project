@@ -1,5 +1,8 @@
 from django.shortcuts import render
+
 from django.http import HttpResponse
+
+from django.core.paginator import Paginator
 
 from operator import attrgetter
 
@@ -8,17 +11,14 @@ from GiggleBit.models import *
 #CHAPTER 19 of rango book is basically essential for our app.
 
 #super sick home page
-def index(request,filter='new'):
+def index(request):
     all_images = Image.objects.all()
-    al_images_sorted_new = sorted(all_images,key=attrgetter('upload_date'),reverse=True)
-    #Testing one
-    new_images = [all_images[:4],all_images[:4],all_images[:4],all_images[:4]]
-    #Proper one, commenting out for testing
-    #Creates a list of QueryList's of size 4 (grid width)
-    #Currently parses 16 images (4 loops of list comprehension)
-    #new_images = [ [all_images[i],all_images[i+1],all_images[i+2],all_images[i+3]] for i in xrange(4)]
+    p= Paginator(all_images,16);
+    try:
+        content_dict = {'new_images': p.page(1)}
+    except:
+        content_dict = {}
 
-    content_dict = {'new_images': new_images}
     return render(request,'gigglebit/index.html', content_dict)
 
 #similar/same as /category/ in rango

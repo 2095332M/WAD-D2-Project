@@ -26,3 +26,14 @@
     </div>
 
 {% endblock %}
+<div class = "row">
+    {% for image in image_list %}
+    <div class="col-md-3 col-sm-6 col-xs-6">
+        <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" class = " img-responsive" alt="IMG"></a>
+    </div>
+    {% endfor %}
+</div>
+<br><br>
+
+                {% cycle "<div class='row'>" "" %}
+                {% cycle "" "</div><br><br>" %}
