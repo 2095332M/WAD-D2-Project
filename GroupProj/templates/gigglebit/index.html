@@ -8,15 +8,21 @@
     <div class="page-header">
         <h1>Popular on GiggleBit Today</h1>
     </div>
+    <div class="fluid-container">
     {% if new_images %}
-        <div class = "row">
             {% for image_list in new_images %}
+                <div class = "row">
                     {% for image in image_list %}
-                        <div class="col-md-3 col-sm-6 col-xs-6" ><a href="{% url 'image'  image.slug %}" class="thumbnail"><img src="{{image.picture.url}}" alt="IMG"></a></div>
+                        <div class="col-md-3 col-sm-6 col-xs-6">
+                            <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" class = " img-responsive" alt="IMG"></a>
+                        </div>
                     {% endfor %}
+                </div>
+                <br><br>
             {% endfor %}
-        </div>
     {% else %}
         <strong>There are no pictures present.</strong>
     {% endif %}
+    <div>
+        
 {% endblock %}

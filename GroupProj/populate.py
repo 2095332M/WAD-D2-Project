@@ -9,7 +9,7 @@ from GiggleBit.models import *
 from datetime import datetime
 
 BASE_DIR = os.path.dirname(__file__)
-image_loc = os.path.join(BASE_DIR,'/static/images/test.jpg')
+image_loc = os.path.join(BASE_DIR,'/static/images/')
 
 def populate():
 
@@ -28,11 +28,14 @@ def populate():
     users += [add_user("Kelvin","456")]
     users += [add_user("Stuart","abc")]
     users += [add_user("Stephen","def")]
-
+    #For testing spacing between images and whitespace in thumbnails
+    #image_filenames = ["blackbox.jpg","blackbox.jpg","blackbox.jpg","blackbox.jpg"]
+    #Test for big images and small images (scaling properly)
+    image_filenames = ["test.jpg", "largetest.jpg","test.jpg", "largetest.jpg"]
     image_names = ["bug", "IDE", "noob", "gaming"]
     images =[]
     for i,user in enumerate(users):
-        images += [add_image(image_names[i],user,cats[i])]
+        images += [add_image(image_names[i],user,cats[i],image_filenames[i])]
 
     #for user in users:
     #    for x in range(5):
@@ -70,8 +73,8 @@ def add_user(username,password,bio="test"):
     up = userprofile.objects.get_or_create(user=u,bio=bio,profile_pic = image_loc)
     return u
 
-def add_image(name,uploader,Cat,views=0):
-    i = Image.objects.get_or_create(name=name,uploader=uploader,picture = image_loc, views=views,upload_date = datetime.now() )[0]
+def add_image(name,uploader,Cat, filename,views =0):
+    i = Image.objects.get_or_create(name=name,uploader=uploader,picture = image_loc + filename, views=views,upload_date = datetime.now() )[0]
     i.category.add(Cat)
     return i
 

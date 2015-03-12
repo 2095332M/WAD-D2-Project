@@ -9,10 +9,15 @@ from GiggleBit.models import *
 
 #super sick home page
 def index(request,filter='new'):
-    all_images = sorted(Image.objects.all(),key=attrgetter('upload_date'),reverse=True)[:16]
-    #Proper one, getting rid for testing
-    #new_images = [all_images[0:4],all_images[4:8],all_images[8:12],all_images[12:16]]
-    new_images = [all_images[0:4],all_images[0:4],all_images[0:4],all_images[0:4]]
+    all_images = Image.objects.all()
+    al_images_sorted_new = sorted(all_images,key=attrgetter('upload_date'),reverse=True)
+    #Testing one
+    new_images = [all_images[:4],all_images[:4],all_images[:4],all_images[:4]]
+    #Proper one, commenting out for testing
+    #Creates a list of QueryList's of size 4 (grid width)
+    #Currently parses 16 images (4 loops of list comprehension)
+    #new_images = [ [all_images[i],all_images[i+1],all_images[i+2],all_images[i+3]] for i in xrange(4)]
+
     content_dict = {'new_images': new_images}
     return render(request,'gigglebit/index.html', content_dict)
 
