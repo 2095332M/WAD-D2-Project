@@ -12,6 +12,8 @@ from GiggleBit.forms import *
 
 from django.template import RequestContext
 
+import datetime
+
 #CHAPTER 19 of rango book is basically essential for our app.
 
 #super sick home page
@@ -47,18 +49,20 @@ def add_image(request):
     if request.method == 'POST':
         image_form = ImageForm(request.POST, request.FILES)
         if image_form.is_valid():
-            newimage = ImageForm.save(commit=False)
+            newimage = image_form.save(commit=False)
             user = User.objects.get(id=request.user.id)
+            
             newimage.uploader = user
-            newimage.picture = image
-            form.save()
+            newimage.picture = request.FILES['picture']
+            newimage.upload_date = datetime.datetime.now()
+            newimage.save()
             
 
         return index(request)
     else:
-        form = ImageForm()
+        image_form = ImageForm()
 
-    content_dict = {'form': form}
+    content_dict = {'image_form': image_form}
     return render(request, 'GiggleBit/addimage.html', content_dict)
 
 
