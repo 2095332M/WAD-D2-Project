@@ -1,8 +1,9 @@
 from django.shortcuts import render, render_to_response
+from django.shortcuts import redirect
 
 from django.http import HttpResponse
 
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 
 from operator import attrgetter
 
@@ -17,29 +18,52 @@ import datetime
 #CHAPTER 19 of rango book is basically essential for our app.
 
 #super sick home page
-def index(request):
+def index(request,page=1):
+    #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /tilde/
+    href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
     content_dict = {}
     all_images = Image.objects.all()
-    p= Paginator(all_images,16);
+    p= Paginator(all_images,16, allow_empty_first_page=False);
+    
     try:
-        content_dict = {'new_images': p.page(1)}
-    except:
-        pass
+        content_dict['new_images'] = p.page(page)
+        if(p.page(page).has_next()):
+            content_dict['next_page'] = href_clean + str(int(page) + 1)
+    except EmptyPage:
+        if page == "1":
+            content_dict['error_message'] = 'There are no images to display, sorry!'
+        else:
+            return redirect('/gigglebit/' + str(p.num_pages) + '/')
+
+
     content_dict['page_header'] = 'Popular on gigglebit today'
+    if page > "1":
+        content_dict['last_page'] = href_clean + str(int(page) - 1)
     return render(request,'gigglebit/imagedisplay.html', content_dict)
 
 #similar/same as /category/ in rango
-def tilde(request,tilde_slug):
-
+def tilde(request,tilde_slug,page=1):
+    #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /tilde/
+    href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
     content_dict = {}
     category = Category.objects.get(slug=tilde_slug)
+    all_images = Image.objects.filter(category=category)
+    p = Paginator(all_images,16,allow_empty_first_page=False)
+    
     try:
         content_dict['page_header'] = category.name
-        all_images = Image.objects.filter(category=category)
-        p = Paginator(all_images,16)
-        content_dict['new_images'] = p.page(1)
     except Category.DoesNotExist:
         content_dict['page_header'] = "This Category doesn't exist"
+        return render(request,'gigglebit/imagedisplay.html', content_dict)
+    try:
+        content_dict['new_images'] = p.page(page)
+        if(p.page(page).has_next()):
+            content_dict['next_page'] = href_clean + str(int(page) + 1)
+    except EmptyPage:
+        if page == "1":
+            content_dict['error_message'] = 'There are no images to display, sorry!'
+        else:
+            return redirect(href_clean + str(p.num_pages))
     return render(request,'gigglebit/imagedisplay.html', content_dict)
 
 

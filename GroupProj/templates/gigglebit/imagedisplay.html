@@ -14,12 +14,26 @@
             {% for image in new_images.object_list %}
                 {% cycle "<div class='row'>" "" "" "" %}
                     <div class="col-md-3 col-sm-6 col-xs-6">
+                        <h3>{{image.name}}</h3>
                         <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" class = " img-responsive" alt="IMG"></a>
                     </div>
                     {% cycle "" "" "" "</div><br><br>" %}
                 {% endfor %}
+    
         {% else %}
-            <strong>See! There are no images.</strong>
+            <strong>{{error_message}}</strong>
         {% endif %}
-        <div>
+        
+        <div class='row'>
+            {% if next_page %}
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <a href="{{next_page}}">Next Page</a>
+            </div>
+            {% endif %}
+            {% if last_page %}
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <a href="{{last_page}}">Last Page</a>
+            </div>
+            {% endif %}
+        </div>
 {% endblock %}
