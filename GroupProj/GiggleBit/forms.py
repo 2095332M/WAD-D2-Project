@@ -1,5 +1,5 @@
 from django import forms
-from rango.models import Image
+from GiggleBit.models import Image
 
 class ImageForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Please enter the category name.")

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Index/Home{% endblock %}
+
+{% block body_block %}
+	<link href="{% static 'dropzone/css/dropzone.css' %}" type="text/css" rel="stylesheet"/>
+	
+	<form class="dropzone" action="{% url 'add_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        </form>
+        <button id="submit-all">
+            Post!
+        </button>
+
+	<script src="{% static 'dropzone/js/dropzone.js' %}"></script>
+	<script type="text/javascript">
+	Dropzone.options.myDropzone = {
+		autoProcessQueue : false,
+		
+		init : function() {
+			var submitButton = document.querySelector("#submit-all")
+			myDropzone = this;
+
+			submitButton.addEventListener("click", function() {
+				myDropzone.processQueue();
+					//Tell Dropzone to process all files,
+                                       //change this.
+			});
+		}
+	};
+	
+	</script>
+{% endblock %}
