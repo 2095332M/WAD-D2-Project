@@ -45,16 +45,21 @@ def tilde(request,tilde_slug):
 #and is accesible from all other pages
 def add_image(request):
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_image = Image(picture = request.FILES['picture'])
-            new_image.save()
+        image_form = ImageForm(request.POST, request.FILES)
+        if image_form.is_valid():
+            newimage = ImageForm.save(commit=False)
+            user = User.objects.get(id=request.user.id)
+            newimage.uploader = user
+            newimage.picture = image
+            form.save()
+            
 
+        return index(request)
     else:
         form = ImageForm()
 
     content_dict = {'form': form}
-    return render_to_response('GiggleBit/addpage.html', content_dict, context_instance=RequestContext(request))
+    return render(request, 'GiggleBit/addimage.html', content_dict)
 
 
 #image/unique_identifier/ one for each image, need random id creator
