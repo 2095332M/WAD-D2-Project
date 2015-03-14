@@ -2,24 +2,24 @@
 
 {% load staticfiles %}
 
-{% block title %}Index/Home{% endblock %}
+{% block title %}Category{% endblock %}
 
 {% block body_block %}
+
     <div class="page-header">
-        <h1>Popular on GiggleBit Today</h1>
+        <h1>{{ page_header }}</h1>
     </div>
     <div class="fluid-container">
-    {% if new_images %}
+        {% if new_images %}
             {% for image in new_images.object_list %}
                 {% cycle "<div class='row'>" "" "" "" %}
                     <div class="col-md-3 col-sm-6 col-xs-6">
                         <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" class = " img-responsive" alt="IMG"></a>
                     </div>
-                {% cycle "" "" "" "</div><br><br>" %}
-            {% endfor %}
-    {% else %}
-        <strong>There are no pictures present.</strong>
-    {% endif %}
-    <div>
-        
+                    {% cycle "" "" "" "</div><br><br>" %}
+                {% endfor %}
+        {% else %}
+            <strong>See! There are no images.</strong>
+        {% endif %}
+        <div>
 {% endblock %}

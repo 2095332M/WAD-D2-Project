@@ -16,14 +16,15 @@ from django.template import RequestContext
 
 #super sick home page
 def index(request):
+    content_dict = {}
     all_images = Image.objects.all()
     p= Paginator(all_images,16);
     try:
         content_dict = {'new_images': p.page(1)}
     except:
-        content_dict = {}
-
-    return render(request,'gigglebit/index.html', content_dict)
+        pass
+    content_dict['page_header'] = 'Popular on gigglebit today'
+    return render(request,'gigglebit/imagedisplay.html', content_dict)
 
 #similar/same as /category/ in rango
 def tilde(request,tilde_slug):
@@ -31,14 +32,13 @@ def tilde(request,tilde_slug):
     content_dict = {}
     category = Category.objects.get(slug=tilde_slug)
     try:
-        content_dict['category_name'] = category.name
+        content_dict['page_header'] = category.name
         all_images = Image.objects.filter(category=category)
-        tilde_images = [all_images[:4],all_images[:4],all_images[:4],all_images[:4]]
-        content_dict['tilde_images'] = tilde_images
-        content_dict['category'] = category
+        p = Paginator(all_images,16)
+        content_dict['new_images'] = p.page(1)
     except Category.DoesNotExist:
-        pass
-    return render(request,'gigglebit/tilde.html', content_dict)
+        content_dict['page_header'] = "This Category doesn't exist"
+    return render(request,'gigglebit/imagedisplay.html', content_dict)
 
 
 #like add_page but needs to deal with multiple ~'s per image
