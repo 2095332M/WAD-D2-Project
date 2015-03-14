@@ -1,14 +1,13 @@
-import os
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 # Create your models here.
 
 def get_path(instance,filename):
-    return os.path.join("%d" % instance.uploader.username, "images", filename)
+    return '/'.join([instance.uploader.username, 'images',filename])
 
 def get_prof_pic_path(instance,filename):
-    return os.path.join("%d" % instance.uploader.username, "profile_images", filename)
+    return '/'.join([instance.uploader.username, 'profile_images',filename])
 
 class userprofile(models.Model): #additional user stuff
     user = models.OneToOneField(User)
@@ -42,7 +41,7 @@ class Image(models.Model):
     #required to upload so we can have anemuse uploads
     #may cause random crashing if user is not defend eg if a pic if draged to upload
     #when not logged in will have to implement extra eroor cheacking
-    picture = models.ImageField(upload_to = get_path(self.uploader, name))
+    picture = models.ImageField(upload_to = get_path()
     #also i want to point out this is very hacky and bad
     category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
