@@ -29,6 +29,33 @@ body {
   background-color: #C0C0C0;
 }
 
+.nav.navbar-nav.navbar-right li a {
+    color: #000000;
+}
+
+.nav.navbar-nav.navbar-centre li a {
+    color: #000000;
+}
+
+.nav.navbar-nav.navbar-left li a {
+    color: #000000;
+}
+
+.nav.navbar-nav.navbar-brand a {
+    color: #000000;
+}
+
+.navbar-centre
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+    margin-left: 54%;
+    color: #000000;
+}
+
 /*
  * Sidebar
  */
@@ -46,7 +73,7 @@ body {
     z-index: 1000;
     display: block;
     padding: 20px;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     background-color: #C0C0C0;
     border-right: 1px solid #eee;
@@ -57,7 +84,7 @@ body {
 .nav-sidebar {
   margin-right: -21px; /* 20px padding + 1px border */
   margin-bottom: 20px;
-  margin-left: -20px;
+  margin-left: 0px;
   color: #000000;
 }
 .nav-sidebar > li > a {

@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 	{% load static %}
+	{% load gigglebit_extras %}
 	<meta charset="utf-8">
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +33,13 @@
 		  <ul class="nav navbar-nav navbar-left">
 				<li><a href = "{% url 'about' %}">About Us</a></li>
 		  </ul>
+		  <ul class="nav navbar-nav navbar-centre">
+			{% if user.is_authenticated %}
+				<li><a href="{% url 'add_image' %}"><strong>Add an Image Here!</strong></a></li>
+			{% else %}
+				<li><a href = "{% url 'auth_login' %}"><strong>Add an Image Here!</strong></a></li>
+			{% endif %}
+		  </ul>
           <ul class="nav navbar-nav navbar-right">
 			{% if user.is_authenticated %}
 				<li><a href="{% url 'auth_logout' %}">Logout</a></li>
@@ -48,13 +56,22 @@
 		<div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
-			<li><a href=""><h3>List Title</h3></a></li>
-			<li><a href="">Get List of Cats</a></li>
+			<li><a href="/gigglebit/"><h3>All Categories</h3></a></li>
+			{% block side_block1 %}
+				{% get_category_list %}
+			{% endblock %}
 			</ul>
+			
 			<ul class="nav nav-sidebar">
-			<li><a href=""><h3>List Title</h3></a></li>
-			<li><a href="">Get List of Cats</a></li>
+			<li><a href=""><h3>Your Favourites</h3></a></li>
+			{% if user.is_authenticated %}
+			{% block side_block2 %}
+				return list of fav cats here, struggling
+			{% endblock %}
+			{% else %}
+			<li><h2>Please log in to see favourites.</h2></li>
 			</ul>
+			{% endif %}
 			<ul class="nav nav-sidebar">
 			<li><a href=""><h3>List Title</h3></a></li>
 			<li><a href="">Get List of Cats</a></li>
