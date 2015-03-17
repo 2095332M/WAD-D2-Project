@@ -1,6 +1,10 @@
 from django import forms
+<<<<<<< HEAD
 from GiggleBit.models import userprofile ,Image
+=======
+from GiggleBit.models import Image
 from GiggleBit.models import Category
+>>>>>>> 172565c757f0c559284c1560adfda041b04a557f
 
 class ImageForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Please enter the image name.")
@@ -11,6 +15,13 @@ class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Image
+<<<<<<< HEAD
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = userprofile
+        fields = ('bio', 'profile_pic')
+=======
         fields = ('name', 'picture', 'category',)
 
     def clean(self):
@@ -29,9 +40,9 @@ class ImageForm(forms.ModelForm):
             imagecats += [Category.objects.get_or_create(name=tildes, views=0)]
         category = imagecats
         return self.cleaned_data #plswork
-
-
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = userprofile
-        fields = ('profile_pic', 'bio')
+    
+            
+        
+                 
+                 
+>>>>>>> 172565c757f0c559284c1560adfda041b04a557f

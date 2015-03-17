@@ -1,8 +1,6 @@
 from django.shortcuts import render, render_to_response
 from django.shortcuts import redirect
 
-from django.contrib.auth.decorators import login_required
-
 from django.http import HttpResponse
 
 from django.core.paginator import Paginator, EmptyPage
@@ -11,11 +9,15 @@ from operator import attrgetter
 
 from GiggleBit.models import *
 
+<<<<<<< HEAD
+from GiggleBit.forms import UserProfileForm
+=======
 from GiggleBit.forms import *
 
 from django.template import RequestContext
 
 import datetime
+>>>>>>> 172565c757f0c559284c1560adfda041b04a557f
 
 #CHAPTER 19 of rango book is basically essential for our app.
 
@@ -26,7 +28,7 @@ def index(request,page=1):
     content_dict = {}
     all_images = Image.objects.all()
     p= Paginator(all_images,16, allow_empty_first_page=False);
-
+    
     try:
         content_dict['new_images'] = p.page(page)
         if(p.page(page).has_next()):
@@ -41,7 +43,7 @@ def index(request,page=1):
     content_dict['page_header'] = 'Popular on gigglebit today'
     if page > "1":
         content_dict['last_page'] = href_clean + str(int(page) - 1)
-    return render(request,'GiggleBit/imagedisplay.html', content_dict)
+    return render(request,'gigglebit/imagedisplay.html', content_dict)
 
 #similar/same as /category/ in rango
 def tilde(request,tilde_slug,page=1):
@@ -51,12 +53,12 @@ def tilde(request,tilde_slug,page=1):
     category = Category.objects.get(slug=tilde_slug)
     all_images = Image.objects.filter(category=category)
     p = Paginator(all_images,16,allow_empty_first_page=False)
-
+    
     try:
         content_dict['page_header'] = category.name
     except Category.DoesNotExist:
         content_dict['page_header'] = "This Category doesn't exist"
-        return render(request,'GiggleBit/imagedisplay.html', content_dict)
+        return render(request,'gigglebit/imagedisplay.html', content_dict)
     try:
         content_dict['new_images'] = p.page(page)
         if(p.page(page).has_next()):
@@ -66,7 +68,7 @@ def tilde(request,tilde_slug,page=1):
             content_dict['error_message'] = 'There are no images to display, sorry!'
         else:
             return redirect(href_clean + str(p.num_pages))
-    return render(request,'GiggleBit/imagedisplay.html', content_dict)
+    return render(request,'gigglebit/imagedisplay.html', content_dict)
 
 
 #like add_page but needs to deal with multiple ~'s per image
@@ -77,12 +79,12 @@ def add_image(request):
         if image_form.is_valid():
             newimage = image_form.save(commit=False)
             user = User.objects.get(id=request.user.id)
-
+            
             newimage.uploader = user
             newimage.picture = request.FILES['picture']
             newimage.upload_date = datetime.datetime.now()
             newimage.save()
-
+            
 
         return index(request)
     else:
@@ -99,15 +101,15 @@ def image(request,image_slug):
     content_dict['tildes'] = image.category.all()
     content_dict["image"] = image
     content_dict["comments"] = comment.objects.filter(image=image)
-    content_dict["likes_count"] = len(liked.objects.filter(image=image))
-    return render(request,"GiggleBit/image.html",content_dict)
+    content_dict["likes"] = len(liked.objects.filter(image=image))
+    return render(request,"gigglebit/image.html",content_dict)
 
 
 #REDIRECT PAGE for each image to track page views for sorting/displaying algorithms
 #could be too hard within time frame to do algorithms but this view itself is ok
 #basically exactly the same to rango's track_url
 def track_url(request):
-
+  
     return HttpResponse("IMPLEMENT ME")
 
 
@@ -117,7 +119,7 @@ def search(request):
 
 #About Page
 def about(request):
-    return render(request, 'GiggleBit/about.html')
+    return render(request, 'gigglebit/about.html')
 
 def register_profile(request):
     if request.method == 'POST':
@@ -132,20 +134,4 @@ def register_profile(request):
         return index(request)
     else:
         form = UserProfileForm(request.GET)
-        return render(request, 'GiggleBit/profile_registration.html', {'profile_form': form})
-
-
-@login_required
-def like_category(request):
-
-    print request.GET["image_id"]
-    print request.GET["user_id"]
-
-    if request.method == 'GET':
-        img = Image.objects.get(id=request.GET['image_id'])
-        user = User.objects.get(id=request.GET['user_id'])
-
-
-        created = liked.objects.get_or_create(user=user,image=img)[1]
-
-    return HttpResponse(created)
+        return render(request, 'gigglebit/profile_registration.html', {'profile_form': form})

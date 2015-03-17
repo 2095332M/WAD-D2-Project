@@ -3,7 +3,7 @@ from GiggleBit.models import Category, User
 
 register = template.Library()
 
-@register.inclusion_tag('gigglebit/cats.html')
+@register.inclusion_tag('GiggleBit/cats.html')
 def get_category_list():
     return {'cats': Category.objects.all()}
 
@@ -17,5 +17,3 @@ def get_fav_cats():
 ##        catlist.append(cats.category)
 ##    return {'cats': Category.objects.filter(user=user)}
     return []
-
-

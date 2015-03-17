@@ -29,9 +29,13 @@
     </div>
     <center>
       <div>
-        <!-can't implement adding comments till logon is implemented ->
-        <!- need to implement the like buttent here prob with a form->
-        {{ likes }} likes
+        {{ likes_count }} likes
+        {% if user.is_authenticated %}
+        <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" class="btn btn-primary" type="button" onClick='clicked_liked()'>
+          <span class="glyphicon glyphicon-thumbs-up"></span>
+          Like
+        </button>
+        {% endif %}
       </div>
       <div>
         {% if comments %}
