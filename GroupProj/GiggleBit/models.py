@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 # Create your models here.
 
-def get_path(instance,filname):
-        return 'images/{0}/{1}'.format(instance.uploader.username, filename)
+def get_path(instance,filename):
+    return '/'.join([instance.uploader.username, 'images',filename])
 
-def get_prof_pic_path(instance,filname):
-        return 'profile_images/{0}/{1}'.format(instance.uploader.username, filename)
+def get_prof_pic_path(instance,filename):
+    return '/'.join([instance.uploader.username, 'profile_images',filename])
 
 class userprofile(models.Model): #additional user stuff
     user = models.OneToOneField(User)
