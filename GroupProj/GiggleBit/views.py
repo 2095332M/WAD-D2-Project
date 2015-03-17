@@ -15,6 +15,8 @@ from django.template import RequestContext
 
 import datetime
 
+#-*- coding: utf-8 -*-
+
 #CHAPTER 19 of rango book is basically essential for our app.
 
 #super sick home page
