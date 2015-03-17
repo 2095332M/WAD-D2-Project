@@ -15,7 +15,9 @@ from GiggleBit.forms import *
 
 from django.template import RequestContext
 
-import datetime
+from datetime import datetime
+
+#-*- coding: utf-8 -*-
 
 #CHAPTER 19 of rango book is basically essential for our app.
 
@@ -27,6 +29,18 @@ def index(request,page=1):
     all_images = Image.objects.all()
     p= Paginator(all_images,16, allow_empty_first_page=False);
 
+
+    #Hot images
+    current_datetime = datetime.now()
+    #Gets the images in the last 12 hours and orders them by descending order
+    twelve_hours_ago = current_datetime - timedelta(hours = 12)
+    hot_images = Image.objects.filter(upload_date__gte=twelve_hours_ago).order_by('-likes')
+    
+    #new_images !!! :)
+    new_images = Image.objects.order_by('upload_date')
+    
+    
+    
     try:
         content_dict['new_images'] = p.page(page)
         if(p.page(page).has_next()):

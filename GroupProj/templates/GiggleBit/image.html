@@ -15,18 +15,21 @@
   <div>
     <div>
       <center>
-        <img src="{{ image.picture.url }}" alt="IMG" />
+        <img src="{{ image.picture.url }}" class="img-responsive" alt="IMG" />
       </center>
     </div>
-    <div>
-        {% if tildes %}
-            {% for tilde in tildes %}
-                <li><a href="{% url 'tilde'  tilde.slug %}">{{ tilde.name }}</a></li>
-            {% endfor %}
-        {% else %}
-            You have found a dead image. Oh no!
-        {% endif %}
-    </div>
+    <center>
+        <div class= "row">
+            
+            {% if tildes %}
+                {% for tilde in tildes %}
+                    <a href="{% url 'tilde'  tilde.slug %}">{{ tilde.name }}</a>
+                {% endfor %}
+            {% else %}
+                You have found a dead image. Oh no!
+            {% endif %}
+        </div>
+    </center>
     <center>
       <div>
         <strong id="like_count">{{ likes_count }}</strong> people like this category
@@ -35,8 +38,11 @@
           <span class="glyphicon glyphicon-thumbs-up"></span>
           Like
         </button>
+        
+        
         {% endif %}
       </div>
+    </center>
       <div>
         {% if comments %}
           {% for comment in comments %}
