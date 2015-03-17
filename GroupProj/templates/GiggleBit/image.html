@@ -29,9 +29,9 @@
     </div>
     <center>
       <div>
-        {{ likes_count }} likes
+        <strong id="like_count">{{ likes_count }}</strong> people like this category
         {% if user.is_authenticated %}
-        <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" class="btn btn-primary" type="button" onClick='clicked_liked()'>
+        <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-primary" type="button" onClick='clicked_liked()'>
           <span class="glyphicon glyphicon-thumbs-up"></span>
           Like
         </button>

@@ -138,14 +138,12 @@ def register_profile(request):
 @login_required
 def like_category(request):
 
-    print request.GET["image_id"]
-    print request.GET["user_id"]
-
     if request.method == 'GET':
         img = Image.objects.get(id=request.GET['image_id'])
         user = User.objects.get(id=request.GET['user_id'])
-
-
+        likes = request.GET['likes_num']
         created = liked.objects.get_or_create(user=user,image=img)[1]
+    if created:
+        likes = str(int(likes)+1)
 
-    return HttpResponse(created)
+    return HttpResponse(likes)
