@@ -8,6 +8,8 @@ from operator import attrgetter
 
 from GiggleBit.models import *
 
+from GiggleBit.forms import UserProfileForm
+
 #CHAPTER 19 of rango book is basically essential for our app.
 
 #super sick home page
@@ -68,3 +70,18 @@ def search(request):
 #About Page
 def about(request):
     return render(request, 'gigglebit/about.html')
+
+def register_profile(request):
+    if request.method == 'POST':
+        profile_form = UserProfileForm(request.POST)
+        if profile_form.is_valid():
+            if request.user.is_authenticated():
+                profile = profile_form.save(commit=False)
+                user = User.objects.get(id=request.user.id)
+                profile.user = user
+                profile.picture = request.FILES['picture']
+                profile.save()
+        return index(request)
+    else:
+        form = UserProfileForm(request.GET)
+        return render(request, 'gigglebit/profile_registration.html', {'profile_form': form})

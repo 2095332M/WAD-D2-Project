@@ -1,5 +1,5 @@
 from django import forms
-from rango.models import Image
+from GiggleBit.models import userprofile ,Image
 
 class ImageForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Please enter the category name.")
@@ -8,3 +8,8 @@ class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Image
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = userprofile
+        fields = ('bio', 'profile_pic')

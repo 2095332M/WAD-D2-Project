@@ -5,7 +5,7 @@ from registration.backends.simple.views import RegistrationView
 
 class MyRegistrationView(RegistrationView):
     def get_success_url(self,request, user):
-        return '/gigglebit/'
+        return '/gigglebit/add_profile/'
 
 urlpatterns = patterns('',
     # Examples:
@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^gigglebit/', include('GiggleBit.urls')),
+    url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
 )
 if settings.DEBUG:
