@@ -10,5 +10,6 @@ urlpatterns = patterns('',
         url(r'^image/(?P<image_slug>[\w\-]+)/$', views.image, name='image'),
         url(r'^add_profile/$', views.register_profile, name = 'add_profile'),
         url(r'^addimage/$', views.add_image, name='add_image'),
+        url(r'^submit_comment/$', views.submit_comment, name='submit_comment'),
         url(r'^like_category/$', views.like_category, name='like_category')
         )

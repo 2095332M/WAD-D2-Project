@@ -20,7 +20,7 @@
     </div>
     <center>
         <div class= "row">
-            
+
             {% if tildes %}
                 {% for tilde in tildes %}
                     <a href="{% url 'tilde'  tilde.slug %}">{{ tilde.name }}</a>
@@ -38,21 +38,26 @@
           <span class="glyphicon glyphicon-thumbs-up"></span>
           Like
         </button>
-        
-        
+
+
         {% endif %}
       </div>
-    </center>
-      <div>
+      <div id="comments" >
         {% if comments %}
           {% for comment in comments %}
             <div>
-              <!-can't implement adding comments till logon is implemented ->
-              {{ comment.comment }}
+              {{ comment.user.username }} : {{ comment.comment }}
             </div>
           {% endfor %}
         {% else %}
           no comments
+        {% endif %}
+        {% if user.is_authenticated %}
+          <form action="/gigglebit/submit_comment/">
+            comment: <input type="text" name="comment"><br>
+            <input type="hidden" name="image" value="{{ image.id }}">
+            <input type="submit" value="Submit">
+          </form>
         {% endif %}
       </div>
     </center>

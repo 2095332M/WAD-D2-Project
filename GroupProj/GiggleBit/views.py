@@ -15,7 +15,7 @@ from GiggleBit.forms import *
 
 from django.template import RequestContext
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 #-*- coding: utf-8 -*-
 
@@ -35,12 +35,12 @@ def index(request,page=1):
     #Gets the images in the last 12 hours and orders them by descending order
     twelve_hours_ago = current_datetime - timedelta(hours = 12)
     hot_images = Image.objects.filter(upload_date__gte=twelve_hours_ago).order_by('-likes')
-    
+
     #new_images !!! :)
     new_images = Image.objects.order_by('upload_date')
-    
-    
-    
+
+
+
     try:
         content_dict['new_images'] = p.page(page)
         if(p.page(page).has_next()):
@@ -113,7 +113,7 @@ def image(request,image_slug):
     content_dict['tildes'] = image.category.all()
     content_dict["image"] = image
     content_dict["comments"] = comment.objects.filter(image=image)
-    content_dict["likes_count"] = len(liked.objects.filter(image=image))
+    content_dict["likes_count"] = liked.objects.filter(image=image).count()
     return render(request,"GiggleBit/image.html",content_dict)
 
 
@@ -161,3 +161,14 @@ def like_category(request):
         likes = str(int(likes)+1)
 
     return HttpResponse(likes)
+
+@login_required
+def submit_comment(request):
+
+    Comment=request.GET['comment']
+    user = request.user
+    image = Image.objects.get(id=request.GET['image'])
+
+    comment.objects.create(user = user,image=image,comment=Comment)
+
+    return redirect("/gigglebit/image/" + image.slug)
