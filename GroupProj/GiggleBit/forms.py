@@ -1,6 +1,7 @@
 from django import forms
 from GiggleBit.models import userprofile ,Image
 from GiggleBit.models import Category
+from django.template.defaultfilters import slugify
 
 class ImageForm(forms.ModelForm):
     name = forms.CharField(max_length=128, help_text="Please enter the image name.")
@@ -11,8 +12,8 @@ class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Image
-        fields = ('name', 'picture', 'category',)
-
+        fields = ['name', 'picture', 'category',]
+        
     def clean(self):
         cleaned_data = self.cleaned_data
         category = cleaned_data.get('category')
@@ -23,10 +24,15 @@ class ImageForm(forms.ModelForm):
             if tilde[0] == '~':
                 ##add to actual categories
                 passingtildes.append(tilde[1:])
-        category = passingtildes #now have list of categories we wish image to have
+        allcats = Category.objects.all()
         imagecats = []
-        for tildes in category:
-            imagecats += [Category.objects.get_or_create(name=tildes, views=0)]
+        for cats in allcats:
+            if cats.name in passingtildes:
+                imagecats.append(cats)
+                passingtildes.remove(cats.name)
+        for tildes in passingtildes:
+            imagecats.append(Category.objects.create(name = tildes, views = 0))
+
         category = imagecats
         return self.cleaned_data #plswork
 

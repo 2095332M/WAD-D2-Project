@@ -45,7 +45,7 @@ class Image(models.Model):
     #also i want to point out this is very hacky and bad
     category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField()
     upload_date = models.DateTimeField()
 
     def save(self,*args, **kwargs):
