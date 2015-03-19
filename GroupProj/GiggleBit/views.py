@@ -159,8 +159,9 @@ def like_category(request):
     if request.method == 'GET':
         img = Image.objects.get(id=request.GET['image_id'])
         user = User.objects.get(id=request.GET['user_id'])
+        userprofie = Userprofile.objects.get(user=user)
         likes = request.GET['likes_num']
-        created = Liked.objects.get_or_create(user=user,image=img)[1]
+        created = Liked.objects.get_or_create(user=userprofie,image=img)[1]
     if created:
         likes = str(int(likes)+1)
 
@@ -170,7 +171,7 @@ def like_category(request):
 def submit_comment(request):
 
     comment = request.GET['comment']
-    user = Userprofile.objects.all().filter(user=request.user)[0]
+    user = Userprofile.objects.get(user=request.user)
     image = Image.objects.get(id=request.GET['image'])
 
     Comment.objects.create(user = user,image=image,comment=comment)
