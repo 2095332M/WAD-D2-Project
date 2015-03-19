@@ -42,21 +42,37 @@
 
         {% endif %}
       </div>
-      <div id="comments" >
+      <div id="comments" class="table-responsive">
         {% if comments %}
+        <table class="table" align="center">
+          <tr>
+            <td><b>User</b></td>
+            <td><b>Comment</b></td>
+          </tr>
           {% for comment in comments %}
-            <div>
-              {{ comment.user.username }} : {{ comment.comment }}
-            </div>
+          <tr>
+            <td>
+              {{ comment.user.username }}
+            </td>
+            <td>
+               {{ comment.comment }}
+            </td>
+          </tr>
           {% endfor %}
+        </table>
         {% else %}
           no comments
         {% endif %}
+      </div>
         {% if user.is_authenticated %}
-          <form action="/gigglebit/submit_comment/">
-            comment: <input type="text" name="comment"><br>
-            <input type="hidden" name="image" value="{{ image.id }}">
-            <input type="submit" value="Submit">
+          enter comment
+          </br>
+          <form class="form-horizontal" action="/gigglebit/submit_comment/" >
+            <div class="form-group">
+              <input type="text" name="comment"><br>
+              <input type="hidden" name="image" value="{{ image.id }}">
+              <input type="submit" value="Submit">
+            </div>
           </form>
         {% endif %}
       </div>
