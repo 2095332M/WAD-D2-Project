@@ -94,7 +94,7 @@ def add_image(request):
 
             newimage.uploader = user
             newimage.picture = request.FILES['picture']
-            newimage.upload_date = datetime.datetime.now()
+            newimage.upload_date = datetime.now()
             newimage.save()
 
 

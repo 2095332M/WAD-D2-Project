@@ -5,14 +5,52 @@
 {% block title %}Index/Home{% endblock %}
 
 {% block body_block %}
-  <div class="page-header">
+
+
+
+
+
+<div class="page-header">
     <center>
       <h1>
         {{image.name}}
       </h1>
     </center>
   </div>
-  <div>
+<div>
+<center>
+    
+    <div class= "col-md-2 col-sm-2 col-xs-2"></div>
+    <div class="col-md-8 col-sm-8 col-xs-8 panel panel-default">
+    
+            <img src="{{ image.picture.url }}" class="img-responsive" alt="IMG" />
+            <div class = "row">
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        {% if user.is_authenticated %}
+                        <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-primary" type="button" onClick='clicked_liked()'>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            Like
+                        </button>
+                        {% else %}
+                        <button>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            Liked
+                        </button>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                            {% if tildes %}
+                                {% for tilde in tildes %}
+                                    <a href="{% url 'tilde'  tilde.slug %}">{{ tilde.name }}</a>
+                                {% endfor %}
+                            {% else %}
+                                You have found a dead image. Oh no!
+                            {% endif %}
+                    </div>
+            </div>
+        
+    </div>
+</center>
     <div>
       <center>
         <img src="{{ image.picture.url }}" class="img-responsive" alt="IMG" />
