@@ -13,7 +13,7 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['name', 'picture', 'category',]
-        
+
     def clean(self):
         cleaned_data = self.cleaned_data
         category = cleaned_data.get('category')
