@@ -1,5 +1,5 @@
 from django import forms
-from GiggleBit.models import userprofile ,Image
+from GiggleBit.models import Userprofile ,Image
 from GiggleBit.models import Category
 from django.template.defaultfilters import slugify
 

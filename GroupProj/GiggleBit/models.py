@@ -19,7 +19,7 @@ class Userprofile(models.Model): #additional user stuff
 
     def save(self,*args, **kwargs):
         self.slug = slugify(self.user.username)
-        super(userprofile, self).save(*args, **kwargs)
+        super(Userprofile, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.user.username
