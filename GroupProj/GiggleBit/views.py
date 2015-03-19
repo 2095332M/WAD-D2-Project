@@ -165,8 +165,8 @@ def like_category(request):
 @login_required
 def submit_comment(request):
 
-    Comment=request.GET['comment']
-    user = request.user
+    Comment = request.GET['comment']
+    user = Userprofile.objects.get(user=request.user)
     image = Image.objects.get(id=request.GET['image'])
 
     comment.objects.create(user = user,image=image,comment=Comment)
