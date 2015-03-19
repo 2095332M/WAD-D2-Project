@@ -13,8 +13,9 @@
         {% if new_images %}
             {% for image in new_images.object_list %}
                 {% cycle "<div class='row'>" "" "" "" %}
-                    <div class="col-md-3 col-sm-3 col-xs-3">
+                    <div class="col-md-3 col-sm-3 col-xs-3 thumbnail">
                         <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" class = " img-responsive" alt="IMG"></a>
+						<div class="caption">{{image.name}}</div>
                     </div>
                     {% cycle "" "" "" "</div><br><br>" %}
                 {% endfor %}
