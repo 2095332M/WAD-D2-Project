@@ -14,81 +14,113 @@ image_loc = os.path.join(BASE_DIR,'/static/images/')
 def populate():
 
     names = "abcdefghij"
-    #Makes it easier to test views rather than a-j
+    
+    #Users
+    Dylan = add_user("Dylan","123", "Linux is love, linux is life","dylan.jpg")
+    Kelvin = add_user("Kelvin","456", "WHY IS IT NOT WORKING?","kelvin.jpg")
+    Stuart = add_user("Stuart","abc", "You're a douche if you make your own bio", "stuart.jpg")
+    Stephen = add_user("Stephen","def","I'm a ghost!", "test.jpg")
+    
+    #Categories
+    linux = add_cat("Linux", 10)
+    mac = add_cat("Mac", 5)
+    windows = add_cat("Windows", 6)
+    maccirclejerk = add_cat("MacCirclejerk",0)
+    wad = add_cat("WAD",2)
+    
+    #Images
+    macbroken = add_image("When a mac breaks",Dylan,[maccirclejerk],"macbroken.jpg")
+    macforchildren = add_image("Mac is for children, lol.", Dylan,[maccirclejerk],"macforchildren.jpg")
+    macbin = add_image("What a mac pro should be used for", Stephen,[maccirclejerk], "macbin.jpg")
+    
+    linuxsudo = add_image("I love sudo", Stuart,[linux], "linuxsudo.jpg")
+    linuxbuild = add_image("Mac is so much better for this very reason", Kelvin,[linux,mac],"linuxbuild.jpg")
+    
+    bugs = add_image("When you're developing your WAD project", Stuart, [wad],"bugs.jpg")
+    compiledcode = add_image("That feeling", Kelvin,[wad], "compiledcode.jpg")
+    hiddensemicolon = add_image("I've spent too much time trying to find the champ", Dylan,[wad],"hiddensemicolon.jpg")
+    
+    windowslinuxmac = add_image("Hate us", Stephen,[windows,linux,mac,maccirclejerk],"windowslinuxmac.jpg")
+    maclinuxwindows = add_image("1000 pounds wasted", Dylan, [windows,linux,mac,maccirclejerk],"maclinuxwindows.jpg")
+    
+    
+    #Likes
+    
+    add_like(Dylan,macbroken)
+    add_like(Dylan,macbin)
+    add_like(Dylan,windowslinuxmac)
+    
+    add_like(Stuart, bugs)
+    add_like(Stuart, compiledcode)
+    add_like(Stuart, linuxbuild)
+    
+    add_like(Kelvin,linuxsudo)
+    add_like(Kelvin,windowslinuxmac)
+    add_like(Kelvin,macforchildren)
+    
+    add_like(Stephen,hiddensemicolon)
+    add_like(Stephen,bugs)
+    add_like(Stephen,macbroken)
+    
+    #Comments
+    
+    add_comment(Stuart,bugs,"I'm hilarious")
+    add_comment(Kelvin,bugs,"Get over yourself")
+    add_comment(Kelvin,bugs,"The uppercase is accurate")
+    
+    add_comment(Dylan,macbin,"Haha, it isn't even a good bin!")
+    add_comment(Stuart,macbin, "I'd totally buy it")
+    add_comment(Stephen,macbin, "Mac user found!")
+    
+    add_comment(Kelvin,windowslinuxmac,"Atleast windows is getting slated")
 
-    cats =[]
-    cats += [add_cat("Linux", 10)]
-    cats += [add_cat("Mac", 5)]
-    cats += [add_cat("Windows", 6)]
-    cats += [add_cat("Java", 7)]
-    cats += [add_cat("Python", 8)]
+    add_comment(Dylan, macbroken, "Like for like, follow for follow!")
 
-    users = []
-    users += [add_user("Dylan","123")]
-    users += [add_user("Kelvin","456")]
-    users += [add_user("Stuart","abc")]
-    users += [add_user("Stephen","def")]
-    #For testing spacing between images and whitespace in thumbnails
-    #image_filenames = ["blackbox.jpg","blackbox.jpg","blackbox.jpg","blackbox.jpg"]
-    #Test for big images and small images (scaling properly)
-    image_filenames = ["test.jpg", "largetest.jpg","test.jpg", "largetest.jpg"]
-    image_names = ["bug", "IDE", "noob", "gaming"]
-    images =[]
-    for i,user in enumerate(users):
-        images += [add_image(image_names[i],user,cats[i],image_filenames[i])]
+    add_comment(Dylan, maclinuxwindows, "Like my first post plz")
 
-    #for user in users:
-    #    for x in range(5):
-    #        if user.username == "b":
-    #            images += [add_image(names[x+5],user,cats[x+5])]
-    #        else:
-    #            images += [add_image(names[x],user,cats[x])]
+    add_comment(Stuart,hiddensemicolon, "This is why python is the best")
 
-    for x in range(len(images)):
-            if x%3==0:
-                add_like(users[0],images[x])
-                add_comment(users[0],images[x])
-            elif x%3 == 1:
-                add_like(users[1],images[x])
-                add_comment(users[1],images[x])
-            else:
-                add_like(users[0],images[x])
-                add_like(users[1],images[x])
-                add_comment(users[0],images[x])
-                add_comment(users[1],images[x])
+    add_comment(Kelvin,compiledcode, "What's compiled code?")
 
-    for x in range(len(cats)):
-        if x%2 ==0:
-            add_fav_category(users[0],cats[x])
-        else:
-            add_fav_category(users[1],cats[x])
+    add_comment(Stephen, linuxsudo, "Sudo makes me break ubuntu, I hate it!")
 
+    add_comment(Stuart, linuxbuild, "Mac works straight out the box")
+
+    add_comment(Kelvin, macforchildren, "Wrong!")
+
+    #Favourites
+    add_fav_category(Dylan, linux)
+    add_fav_category(Kelvin, wad)
+    add_fav_category(Stuart, mac)
+    add_fav_category(Stephen,windows)
 
 def add_cat(name, views=0,):
     c = Category.objects.get_or_create(name=name, views=views)[0]
     return c
 
-def add_user(username,password,bio="test"):
-    u = User.objects.create_user(username=username,password=password)
-    up = userprofile.objects.get_or_create(user=u,bio=bio,profile_pic = image_loc)
-    return u
 
-def add_image(name,uploader,Cat, filename,views =0):
+def add_user(username,password,bio="test",profile_pic= "test.jpg"):
+    u = User.objects.create_user(username=username,password=password)
+    up = Userprofile.objects.get_or_create(user=u, profile_pic=image_loc + profile_pic, bio=bio)[0]
+    return up
+
+def add_image(name,uploader,categories, filename,views =0):
     i = Image.objects.get_or_create(name=name,uploader=uploader,picture = image_loc + filename, views=views,upload_date = datetime.now() )[0]
-    i.category.add(Cat)
+    for category in categories:
+        i.category.add(category)
     return i
 
 def add_comment(user,image,com="test"):
-    c = comment.objects.get_or_create(user=user,image=image,comment=com)
+    c = Comment.objects.get_or_create(user=user,image=image,comment=com)
     return c
 
 
 def add_like(user,image):
-    l = liked.objects.get_or_create(user=user,image=image)
+    l = Liked.objects.get_or_create(user=user,image=image)
     return l
 
 def add_fav_category(user,cat):
-    fc = fav_category.objects.get_or_create(user=user,category=cat)
+    fc = Fav_category.objects.get_or_create(user=user,category=cat)
     return fc
 
 # Start execution here!
