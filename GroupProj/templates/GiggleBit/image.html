@@ -7,99 +7,68 @@
 {% block body_block %}
 
 
+<div class= "col-md-2 col-sm-2 col-xs-2"></div>
+<div class="col-md-8 col-sm-8 col-xs-8">
+    <div class ="thumbnail fluid-container">
+        <center>
+            <h1>
+                {{image.name}}
+            </h1>
+        </center>
 
-
-
-<div class="page-header">
-    <center>
-      <h1>
-        {{image.name}}
-      </h1>
-    </center>
-  </div>
-<div>
-<center>
-    
-    <div class= "col-md-2 col-sm-2 col-xs-2"></div>
-    <div class="col-md-8 col-sm-8 col-xs-8 panel panel-default">
-    
-            <img src="{{ image.picture.url }}" class="img-responsive" alt="IMG" />
-            <div class = "row">
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-                        {% if user.is_authenticated %}
-                        <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-primary" type="button" onClick='clicked_liked()'>
-                            <span class="glyphicon glyphicon-thumbs-up"></span>
-                            Like
-                        </button>
-                        {% else %}
-                        <button>
-                            <span class="glyphicon glyphicon-thumbs-up"></span>
-                            Liked
-                        </button>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-                            {% if tildes %}
-                                {% for tilde in tildes %}
-                                    <a href="{% url 'tilde'  tilde.slug %}">{{ tilde.name }}</a>
-                                {% endfor %}
-                            {% else %}
-                                You have found a dead image. Oh no!
-                            {% endif %}
-                    </div>
-            </div>
         
-    </div>
-</center>
-    <div>
-      <center>
         <img src="{{ image.picture.url }}" class="img-responsive" alt="IMG" />
-      </center>
-    </div>
-    <center>
-        <div class= "row">
-
+        
+        <div class="pull-left centered">
+            
+            {% if user.is_authenticated %}
+            <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-default" type="button" onClick='clicked_liked()'>
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+                Like
+            </button>
+            {% endif %}
+        </div>
+        <div>
             {% if tildes %}
                 {% for tilde in tildes %}
-                    <a href="{% url 'tilde'  tilde.slug %}">{{ tilde.name }}</a>
+                    <a class="pull-left" href="{% url 'tilde'  tilde.slug %}">~{{ tilde.name }}</a>
                 {% endfor %}
             {% else %}
                 You have found a dead image. Oh no!
             {% endif %}
+
         </div>
-    </center>
-    <center>
-      <div>
-        <strong id="like_count">{{ likes_count }}</strong> people like this category
-        {% if user.is_authenticated %}
-        <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-primary" type="button" onClick='clicked_liked()'>
-          <span class="glyphicon glyphicon-thumbs-up"></span>
-          Like
-        </button>
+        <br><hr>
+        <div id="comments">
+            
+            {% if comments %}
+                {% for comment in comments %}
+                <div class="row">
+                    <div class ="col-md-2 col-sm-2 col-xs-2 thumbnail">
+                        <img src=" {{comment.user.profile_pic}} " class="img-responsive" alt="IMG" />
+                    </div>
+                    <div class ="col-md-8 col-sm-8 col-xs-8"><p>{{ comment.comment }}</p></div>
+                </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+            <hr>
+            {% if user.is_authenticated %}
+            <center>
+                <form action="/gigglebit/submit_comment/">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="comment" placeholder="Write a comment"><br>
+                        <input type="hidden" name="image" value="{{ image.id }}">
+                        <span class="input-group-btn"><input class="btn btn-default" type="submit" value="Submit"></span>
+                </form>
+            </center>
+            {% endif %}
+        </div>
+            
+    </div>
 
-
-        {% endif %}
-      </div>
-      <div id="comments" >
-        {% if comments %}
-          {% for comment in comments %}
-            <div>
-              {{ comment.user.username }} : {{ comment.comment }}
-            </div>
-          {% endfor %}
-        {% else %}
-          no comments
-        {% endif %}
-        {% if user.is_authenticated %}
-          <form action="/gigglebit/submit_comment/">
-            comment: <input type="text" name="comment"><br>
-            <input type="hidden" name="image" value="{{ image.id }}">
-            <input type="submit" value="Submit">
-          </form>
-        {% endif %}
-      </div>
-    </center>
-  <div>
+    
+</div>
 
 
 {% endblock %}
