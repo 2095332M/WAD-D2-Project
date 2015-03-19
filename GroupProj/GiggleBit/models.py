@@ -9,7 +9,7 @@ def get_path(instance,filename):
 def get_prof_pic_path(instance,filename):
     return '/'.join([instance.uploader.username, 'profile_images',filename])
 
-class userprofile(models.Model): #additional user stuff
+class Userprofile(models.Model): #additional user stuff
     user = models.OneToOneField(User)
 
     # The additional attributes we wish to include.
@@ -36,7 +36,7 @@ class Category(models.Model):
 class Image(models.Model):
 
     name = models.CharField(max_length=128, unique=True)
-    uploader = models.ForeignKey(User)
+    uploader = models.ForeignKey(Userprofile)
     #uploader now must be defind in the form before the image and a user is
     #required to upload so we can have anemuse uploads
     #may cause random crashing if user is not defend eg if a pic if draged to upload
@@ -55,8 +55,8 @@ class Image(models.Model):
     def __unicode__(self):
         return self.name
 
-class comment(models.Model):
-    user = models.ForeignKey(userprofile)
+class Comment(models.Model):
+    user = models.ForeignKey(Userprofile)
     image = models.ForeignKey(Image)
     comment = models.CharField(max_length=512)
 
@@ -64,10 +64,10 @@ class comment(models.Model):
         return self.comment
 
 
-class liked(models.Model):
-    user = models.ForeignKey(User)
+class Liked(models.Model):
+    user = models.ForeignKey(Userprofile)
     image = models.ForeignKey(Image)
 
-class fav_category(models.Model):
-    user = models.ForeignKey(User)
+class Fav_category(models.Model):
+    user = models.ForeignKey(Userprofile)
     category = models.ForeignKey(Category)

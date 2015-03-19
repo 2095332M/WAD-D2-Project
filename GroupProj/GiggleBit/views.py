@@ -27,7 +27,7 @@ def index(request,page=1):
     href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
     content_dict = {}
     all_images = Image.objects.all()
-    p= Paginator(all_images,16, allow_empty_first_page=False);
+    p = Paginator(all_images,16, allow_empty_first_page=False);
 
 
     #Hot images
@@ -112,8 +112,8 @@ def image(request,image_slug):
     image = Image.objects.get(slug=image_slug)
     content_dict['tildes'] = image.category.all()
     content_dict["image"] = image
-    content_dict["comments"] = comment.objects.filter(image=image)
-    content_dict["likes_count"] = liked.objects.filter(image=image).count()
+    content_dict["comments"] = Comment.objects.filter(image=image)
+    content_dict["likes_count"] = Liked.objects.filter(image=image).count()
     return render(request,"GiggleBit/image.html",content_dict)
 
 
@@ -156,7 +156,7 @@ def like_category(request):
         img = Image.objects.get(id=request.GET['image_id'])
         user = User.objects.get(id=request.GET['user_id'])
         likes = request.GET['likes_num']
-        created = liked.objects.get_or_create(user=user,image=img)[1]
+        created = Liked.objects.get_or_create(user=user,image=img)[1]
     if created:
         likes = str(int(likes)+1)
 
@@ -165,10 +165,10 @@ def like_category(request):
 @login_required
 def submit_comment(request):
 
-    Comment = request.GET['comment']
-    user = userprofile.objects.all().filter(user=request.user)[0]
+    comment = request.GET['comment']
+    user = Userprofile.objects.all().filter(user=request.user)[0]
     image = Image.objects.get(id=request.GET['image'])
 
-    comment.objects.create(user = user,image=image,comment=Comment)
+    Comment.objects.create(user = user,image=image,comment=comment)
 
     return redirect("/gigglebit/image/" + image.slug)
