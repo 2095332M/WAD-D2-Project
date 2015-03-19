@@ -166,7 +166,7 @@ def like_category(request):
 def submit_comment(request):
 
     Comment = request.GET['comment']
-    user = Userprofile.objects.get(user=request.user)
+    user = userprofile.objects.all().filter(user=request.user)[0]
     image = Image.objects.get(id=request.GET['image'])
 
     comment.objects.create(user = user,image=image,comment=Comment)

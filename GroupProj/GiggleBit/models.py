@@ -56,7 +56,7 @@ class Image(models.Model):
         return self.name
 
 class comment(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(userprofile)
     image = models.ForeignKey(Image)
     comment = models.CharField(max_length=512)
 
