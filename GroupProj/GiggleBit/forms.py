@@ -24,7 +24,9 @@ class ImageForm(forms.ModelForm):
             if tilde[0] == '~':
                 ##add to actual categories
                 passingtildes.append(tilde[1:])
+                print tilde[1:]
         allcats = Category.objects.all()
+
         imagecats = []
         for cats in allcats:
             if cats.name in passingtildes:
@@ -32,9 +34,10 @@ class ImageForm(forms.ModelForm):
                 passingtildes.remove(cats.name)
         for tildes in passingtildes:
             imagecats.append(Category.objects.create(name = tildes, views = 0))
+            print imagecats
 
-        category = imagecats
-        return self.cleaned_data #plswork
+        cleaned_data['category'] = imagecats
+        return cleaned_data #plswork
 
 
 class UserProfileForm(forms.ModelForm):

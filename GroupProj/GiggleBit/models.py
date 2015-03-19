@@ -4,10 +4,10 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 
 def get_path(instance,filename):
-    return '/'.join([instance.uploader.username, 'images',filename])
+    return '/'.join([instance.uploader.user.username, 'images',filename])
 
 def get_prof_pic_path(instance,filename):
-    return '/'.join([instance.uploader.username, 'profile_images',filename])
+    return '/'.join([instance.uploader.user.username, 'profile_images',filename])
 
 class Userprofile(models.Model): #additional user stuff
     user = models.OneToOneField(User)

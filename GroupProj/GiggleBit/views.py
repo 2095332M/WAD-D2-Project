@@ -87,18 +87,22 @@ def tilde(request,tilde_slug,page=1):
 #and is accesible from all other pages
 def add_image(request):
     if request.method == 'POST':
-        image_form = ImageForm(request.POST, request.FILES)
-        if image_form.is_valid():
-            newimage = image_form.save(commit=False)
-            user = User.objects.get(id=request.user.id)
+		image_form = ImageForm(request.POST, request.FILES)
+		if image_form.is_valid():
+			newimage = image_form.save(commit=False)
+			userobj = User.objects.get(id=request.user.id)
+			currentuser = Userprofile.objects.filter(user=userobj)[0]
+			newimage.uploader = currentuser
+			newimage.picture = request.FILES['picture']
+			newimage.upload_date = datetime.now()
+			newimage.save()
+			image = Image.objects.get(name=image_form.cleaned_data['name'])
+                        categories = image_form.cleaned_data['category']
+                        print categories
+			for category in categories:
+				image.category.add(category)
 
-            newimage.uploader = user
-            newimage.picture = request.FILES['picture']
-            newimage.upload_date = datetime.now()
-            newimage.save()
-
-
-        return index(request)
+		return index(request)
     else:
         image_form = ImageForm()
 
