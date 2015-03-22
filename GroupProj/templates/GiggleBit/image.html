@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block title %}Index/Home{% endblock %}
+{% block title %}{{image.name}}{% endblock %}
 
 {% block body_block %}
 
@@ -18,10 +18,8 @@
 
 
         <img src="{{ image.picture.url }}" class="img-responsive" alt="IMG" />
-
-        <div class="pull-left centered">
-
-            <strong id="like_count">{{ likes_count }}</strong> people like this category
+		<div>Uploader: {{ image.uploader.user.username }}</div>
+        <div class="pull-right">
             {% if user.is_authenticated %}
             <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-default" type="button" onClick='clicked_liked()'>
                 <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -38,7 +36,10 @@
                 You have found a dead image. Oh no!
             {% endif %}
 
-        </div>
+        </div><br>
+		<div>
+			<strong id="like_count">{{ likes_count }}</strong> people like this
+		</div>
         <br><hr>
         <div id="comments">
 
@@ -47,6 +48,9 @@
                 <div class="row">
                     <div class ="col-md-2 col-sm-2 col-xs-2 thumbnail">
                         <img src=" {{comment.user.profile_pic}} " class="img-responsive" alt="IMG" />
+						<div class="caption">
+							{{comment.user.user.username}}
+						</div>
                     </div>
                     <div class ="col-md-8 col-sm-8 col-xs-8"><p>{{ comment.comment }}</p></div>
                 </div>
