@@ -6,7 +6,7 @@
 body {
   padding-top: 50px;
   color: #000000;
-  background-color: #ededed;
+  background-color: #B5D3FF;
 }
 
 
@@ -26,7 +26,7 @@ body {
  */
 .navbar-fixed-top {
   color: #000000;
-  background-color: #C0C0C0;
+  background-color: #B5D3FF;
 }
 
 .nav.navbar-nav.navbar-right li a {
@@ -75,8 +75,8 @@ body {
     padding: 20px;
     overflow-x: auto;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #C0C0C0;
-    border-right: 1px solid #eee;
+    background-color: #B5D3FF;
+    border-right: 1px solid #B5D3FF;
   }
 }
 
@@ -96,7 +96,7 @@ body {
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
   color: #000000;
-  background-color: #000000;
+  background-color: #4791FF;
 }
 
 
@@ -107,7 +107,7 @@ body {
 .main {
   padding: 20px;
   color: #000000;
-  background-color: #ededed;
+  background-color: #FFFFFF;
   
 }
 @media (min-width: 768px) {
@@ -115,13 +115,13 @@ body {
     padding-right: 40px;
     padding-left: 40px;
     color: #000000;
-    background-color: #ededed;
+    background-color: #FFFFFF;
   }
 }
 .main .page-header {
   margin-top: 0;
   color: #000000;
-  background-color: #ededed;
+  background-color: #FFFFFF;
 }
 
 
@@ -133,21 +133,21 @@ body {
   margin-bottom: 30px;
   text-align: center;
   color: #000000;
-  background-color: #ededed;
+  background-color: #FFFFFF;
 }
 .placeholders h4 {
   margin-bottom: 0;
   color: #000000;
-  background-color: #ededed;
+  background-color: #B5D3FF;
 }
 .placeholder {
   margin-bottom: 20px;
   color: #000000;
-  background-color: #ededed;
+  background-color: #FFFFFF;
 }
 .placeholder img {
   display: inline-block;
   border-radius: 50%;
   color: #000000;
-  background-color: #ededed;
+  background-color: #FFFFFF;
 }

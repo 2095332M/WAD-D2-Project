@@ -43,6 +43,9 @@ def index(request,page=1):
 
     try:
         content_dict['new_images'] = p.page(page)
+		# check if not mod 4
+        if((not (p.page(page).end_index() + 1 ) /4 == 0)):
+			content_dict['not_mod4'] = 'True'
         if(p.page(page).has_next()):
             content_dict['next_page'] = href_clean + str(int(page) + 1)
     except EmptyPage:
@@ -73,6 +76,8 @@ def tilde(request,tilde_slug,page=1):
         return render(request,'GiggleBit/imagedisplay.html', content_dict)
     try:
         content_dict['new_images'] = p.page(page)
+        if((not (p.page(page).end_index() + 1 ) /4 == 0)):
+		    content_dict['not_mod4'] = 'True'
         if(p.page(page).has_next()):
             content_dict['next_page'] = href_clean + str(int(page) + 1)
     except EmptyPage:
@@ -177,3 +182,7 @@ def submit_comment(request):
     Comment.objects.create(user = user,image=image,comment=comment)
 
     return redirect("/gigglebit/image/" + image.slug)
+
+
+def bad_url(request):
+	return render(request, 'rango/badpage.html')

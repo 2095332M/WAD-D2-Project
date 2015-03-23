@@ -13,17 +13,18 @@
         {% if new_images %}
             {% for image in new_images.object_list %}
                 {% cycle "<div class='row'>" "" "" "" %}
-                    <div class="col-md-3 col-sm-3 col-xs-3 thumbnail">
-                        <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" class = " img-responsive" alt="IMG"></a>
-						<div class="caption">{{image.name}}</div>
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" height = "200"class = " img-responsive" alt="IMG"></a>
                     </div>
                     {% cycle "" "" "" "</div><br><br>" %}
                 {% endfor %}
-    
+				{% if not_mod4 %}
+					</div>
+				{% endif %}
         {% else %}
             <strong>{{error_message}}</strong>
         {% endif %}
-        
+        <br>
         <div class='row'>
             {% if next_page %}
             <div class="col-md-3 col-sm-6 col-xs-6 col-centered">
