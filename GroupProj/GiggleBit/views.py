@@ -103,7 +103,6 @@ def add_image(request):
 			newimage.save()
 			image = Image.objects.get(name=image_form.cleaned_data['name'])
                         categories = image_form.cleaned_data['category']
-                        print categories
 			for category in categories:
 				image.category.add(category)
 
