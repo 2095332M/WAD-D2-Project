@@ -22,11 +22,11 @@ def populate():
     Stephen = add_user("Stephen","def","I'm a ghost!", "test.jpg")
     
     #Categories
-    linux = add_cat("Linux", 10)
-    mac = add_cat("Mac", 5)
-    windows = add_cat("Windows", 6)
-    maccirclejerk = add_cat("MacCirclejerk",0)
-    wad = add_cat("WAD",2)
+    linux = add_cat("linux", 10)
+    mac = add_cat("mac", 5)
+    windows = add_cat("windows", 6)
+    maccirclejerk = add_cat("maccirclejerk",0)
+    wad = add_cat("wad",2)
     
     #Images
     macbroken = add_image("When a mac breaks",Dylan,[maccirclejerk],"macbroken.jpg")
