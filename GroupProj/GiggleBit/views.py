@@ -182,6 +182,15 @@ def submit_comment(request):
 
     return redirect("/gigglebit/image/" + image.slug)
 
+def suggest_category(request):
+
+    cat_list = []
+    starts_with = ''
+    if request.method == 'GET':
+        starts_with = request.GET['suggestion']
+    cat_list = get_category_list(10, starts_with)
+
+    return render(request, 'GiggleBit/cats.html', {'cat_list': cat_list})
 
 def bad_url(request):
 	return render(request, 'rango/badpage.html')

@@ -11,5 +11,6 @@ urlpatterns = patterns('',
         url(r'^add_profile/$', views.register_profile, name = 'add_profile'),
         url(r'^addimage/$', views.add_image, name='add_image'),
         url(r'^submit_comment/$', views.submit_comment, name='submit_comment'),
-        url(r'^like_category/$', views.like_category, name='like_category')
+        url(r'^like_category/$', views.like_category, name='like_category'),
+        url(r'^suggest_category/$', views.suggest_category, name='suggest_category'),
         )
