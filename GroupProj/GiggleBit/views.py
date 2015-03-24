@@ -151,7 +151,7 @@ def register_profile(request):
                 profile = profile_form.save(commit=False)
                 profile.user = user
                 if 'profile_picture' in request.FILES:
-                    profile.picture = request.FILES['picture']
+                    profile.picture = request.FILES['profile_picture']
                 profile.save()
         return redirect('/gigglebit/')
     else:
