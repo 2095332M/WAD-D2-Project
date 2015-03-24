@@ -51,14 +51,14 @@ def index(request,page=1):
 
     #Top images
     elif image_filter == "top":
-        filtered_images = Image.objects.order_by('-liked')
+        filtered_images = Image.objects.order_by('-likes')
         content_dict['page_header'] = 'Top images on all of GiggleBit'
     #Hot images
     else:
         current_datetime = datetime.now()
         #Gets the images in the last 12 hours and orders them by descending order
         twelve_hours_ago = current_datetime - timedelta(hours = 12)
-        filtered_images = Image.objects.filter(upload_date__gte=twelve_hours_ago).order_by('-liked')
+        filtered_images = Image.objects.filter(upload_date__gte=twelve_hours_ago).order_by('-likes')
         content_dict['page_header'] = 'Popular on GiggleBit right now!'
 
     p = Paginator(filtered_images,16, allow_empty_first_page=False);
@@ -114,14 +114,15 @@ def tilde(request,tilde_slug,page=1):
 
     #Top images
     elif image_filter == "top":
-        filtered_images = all_images.order_by('-liked')
+        filtered_images = all_images.order_by('-likes')
         content_dict['page_header'] = 'Top images on all of' + category.name
     #Hot images
     else:
         current_datetime = datetime.now()
         #Gets the images in the last 12 hours and orders them by descending order
         twelve_hours_ago = current_datetime - timedelta(hours = 12)
-        filtered_images = all_images.filter(upload_date__gte=twelve_hours_ago).order_by('-liked')
+        filtered_images = all_images.filter( upload_date__gte=twelve_hours_ago).order_by('-likes')
+        print filtered_images
         content_dict['page_header'] = 'Popular on '+ category.name+' right now!'
 
     p = Paginator(filtered_images,16, allow_empty_first_page=False);

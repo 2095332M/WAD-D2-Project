@@ -37,12 +37,8 @@ class Image(models.Model):
 
     name = models.CharField(max_length=128, unique=True)
     uploader = models.ForeignKey(Userprofile)
-    #uploader now must be defind in the form before the image and a user is
-    #required to upload so we can have anemuse uploads
-    #may cause random crashing if user is not defend eg if a pic if draged to upload
-    #when not logged in will have to implement extra eroor cheacking
+	likes = models.IntegerField(default=0)
     picture = models.ImageField(upload_to = get_path)
-    #also i want to point out this is very hacky and bad
     category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
     slug = models.SlugField()
