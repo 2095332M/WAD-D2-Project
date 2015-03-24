@@ -43,7 +43,7 @@ def index(request,page=1):
     content_dict['hot_hyperlink'] = href_clean + 'hot/1/'
     content_dict['new_hyperlink'] = href_clean + 'new/1/'
     content_dict['top_hyperlink'] = href_clean + 'top/1/'
-    
+
     #New images
     if image_filter == "new":
         filtered_images = Image.objects.order_by('upload_date')
@@ -126,7 +126,7 @@ def tilde(request,tilde_slug,page=1):
         content_dict['page_header'] = 'Popular on '+ category.name+' right now!'
 
     p = Paginator(filtered_images,16, allow_empty_first_page=False);
-    
+
     try:
         content_dict['page_header'] = category.name
     except Category.DoesNotExist:
@@ -232,6 +232,7 @@ def like_category(request):
         created = Liked.objects.get_or_create(user=userprofie,image=img)[1]
     if created:
         likes = str(int(likes)+1)
+        img.likes = likes
 
     return HttpResponse(likes)
 

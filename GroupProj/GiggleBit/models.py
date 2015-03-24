@@ -37,7 +37,7 @@ class Image(models.Model):
 
     name = models.CharField(max_length=128, unique=True)
     uploader = models.ForeignKey(Userprofile)
-	likes = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
     picture = models.ImageField(upload_to = get_path)
     category = models.ManyToManyField(Category)
     views = models.IntegerField(default=0)
