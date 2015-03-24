@@ -14,7 +14,7 @@
             {% for image in new_images.object_list %}
                 {% cycle "<div class='row'>" "" "" "" %}
                     <div class="col-md-3 col-sm-3 col-xs-3">
-                        <a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" height = "200"class = " img-responsive" alt="IMG"></a>
+                        <div class="thumb"><a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" height = "200"class = " img-responsive" alt="IMG"></a></div>
                     </div>
                     {% cycle "" "" "" "</div><br><br>" %}
                 {% endfor %}
@@ -26,15 +26,17 @@
         {% endif %}
         <br>
         <div class='row'>
-            {% if next_page %}
-            <div class="col-md-3 col-sm-6 col-xs-6 col-centered">
-                <a href="{{next_page}}">Next Page</a>
-            </div>
-            {% endif %}
-            {% if last_page %}
-            <div class="col-md-3 col-sm-6 col-xs-6 col-centered">
-                <a href="{{last_page}}">Last Page</a>
-            </div>
-            {% endif %}
+			<center>
+				{% if next_page %}
+					<div class="col-md-3 col-sm-6 col-xs-6 col-centered">
+						<a href="{{next_page}}">Next Page</a>
+					</div>
+				{% endif %}
+				{% if last_page %}
+				<div class="col-md-3 col-sm-6 col-xs-6 col-centered">
+					<a href="{{last_page}}">Last Page</a>
+				</div>
+				{% endif %}
+			</center>
         </div>
 {% endblock %}
