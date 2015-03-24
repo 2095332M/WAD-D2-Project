@@ -198,7 +198,7 @@ def suggest_category(request):
         starts_with = request.GET['suggestion']
     cat_list = get_category_list(10, starts_with)
 
-    return render(request, 'GiggleBit/cats.html', {'cat_list': cat_list})
+    return render(request, 'GiggleBit/cats.html', {'cats': cat_list})
 
 def bad_url(request):
 	return render(request, 'rango/badpage.html')

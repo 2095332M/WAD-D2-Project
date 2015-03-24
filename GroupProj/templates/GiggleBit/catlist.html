@@ -1,6 +1,6 @@
-{% if cats %}
+{% if cat_list %}
     <ul class="nav nav-sidebar">
-    {% for c in cats %}
+    {% for c in cat_list %}
         <li><a href="{% url 'tilde'  c.slug %}">~{{ c.name }}</a></li>
     {% endfor %}
 

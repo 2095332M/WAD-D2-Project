@@ -3,7 +3,7 @@ from GiggleBit.models import Category, User
 
 register = template.Library()
 
-@register.inclusion_tag('GiggleBit/cats.html')
+@register.inclusion_tag('GiggleBit/catlist.html')
 def get_category_list(max_results=0, starts_with=''):
     cat_list = []
     if starts_with:
@@ -14,6 +14,7 @@ def get_category_list(max_results=0, starts_with=''):
             
     return cat_list
 
+@register.inclusion_tag('GiggleBit/cats.html')
 def get_all_cats():
     return {'cats': Category.objects.all()}
 
