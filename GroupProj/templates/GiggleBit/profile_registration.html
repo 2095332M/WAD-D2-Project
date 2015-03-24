@@ -9,8 +9,7 @@
         	<h1>Add Profile</h1>
        </div>
 
-        <form id="profile_form" role="form" id="user_form" method="post" action="{% url 'add_profile' %}"
-                enctype="multipart/form-data">
+        <form id="profile_form" role="form" id="user_form" method="post" action="{% url 'add_profile' %}" enctype="multipart/form-data">
 
 		{% csrf_token %}
 

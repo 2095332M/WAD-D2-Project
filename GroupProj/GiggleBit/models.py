@@ -13,7 +13,7 @@ class Userprofile(models.Model): #additional user stuff
     user = models.OneToOneField(User)
 
     # The additional attributes we wish to include.
-    profile_pic = models.ImageField(upload_to=get_prof_pic_path)
+    profile_pic = models.ImageField(upload_to=get_prof_pic_path, default='test.jpg')
     bio = models.CharField(max_length=512)
     slug = models.SlugField(unique=True)
 
