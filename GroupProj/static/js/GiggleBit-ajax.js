@@ -10,3 +10,14 @@ function clicked_liked() {
     $('#like_count').html(likes_count);
     $('#likes').hide();
 })}
+
+$(document).ready(function() {
+	$('#suggestion').keyup(function(){
+        	var query;
+        	query = $(this).val();
+        	$.get('/GiggleBit/suggest_category/', {suggestion: query}, function(data){
+         	$('#cats').html(data);
+        	});
+	});
+
+});
