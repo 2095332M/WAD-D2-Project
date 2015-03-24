@@ -24,26 +24,37 @@ from datetime import datetime, timedelta
 #super sick home page
 def index(request,page=1):
     #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /tilde/
+    #Of the form /gigglebit/<hot,top,new>/<page_no>
     href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
+    image_filter = href_clean[-4:-1]
     content_dict = {}
-    all_images = Image.objects.all()
-    p = Paginator(all_images,16, allow_empty_first_page=False);
 
+    #Top/hot/new hyperlinks
+    content_dict['hot_hyperlink'] = href_clean[:-4] + 'hot/1/'
+    content_dict['new_hyperlink'] = href_clean[:-4] + 'new/1/'
+    content_dict['top_hyperlink'] = href_clean[:-4] + 'top/1/'
+    
+    #New images
+    if image_filter == "new":
+        filtered_images = Image.objects.order_by('upload_date')
+        content_dict['page_header'] = 'New images uploaded to GiggleBit'
 
+    #Top images
+    elif image_filter == "top":
+        filtered_images = Image.objects.order_by('-liked')
+        content_dict['page_header'] = 'Top images on all of GiggleBit'
     #Hot images
-    current_datetime = datetime.now()
-    #Gets the images in the last 12 hours and orders them by descending order
-    twelve_hours_ago = current_datetime - timedelta(hours = 12)
-    hot_images = Image.objects.filter(upload_date__gte=twelve_hours_ago).order_by('-likes')
+    else:
+        current_datetime = datetime.now()
+        #Gets the images in the last 12 hours and orders them by descending order
+        twelve_hours_ago = current_datetime - timedelta(hours = 12)
+        filtered_images = Image.objects.filter(upload_date__gte=twelve_hours_ago).order_by('-liked')
+        content_dict['page_header'] = 'Popular on GiggleBit right now!'
 
-    #new_images !!! :)
-    new_images = Image.objects.order_by('upload_date')
-
-
-
+    p = Paginator(filtered_images,16, allow_empty_first_page=False);
     try:
         content_dict['new_images'] = p.page(page)
-		# check if not mod 4
+	# check if not mod 4
         if((not (p.page(page).end_index() + 1 ) /4 == 0)):
 			content_dict['not_mod4'] = 'True'
         if(p.page(page).has_next()):
@@ -65,12 +76,44 @@ def index(request,page=1):
 #similar/same as /category/ in rango
 def tilde(request,tilde_slug,page=1):
     #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /tilde/
-    href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
+    if(request.get_full_path().count('/') > 4):
+        #/gigglebit/tilde/<tildename>/<top,new,hot>/<pageno>/ becomes /tilde/<tn>/<t,h,n>/
+        href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
+        image_filter = href_clean[-4:-1]
+        href_clean = href_clean[:-4]
+    else:
+        #/gigglebit/tilde/<tn>/
+        href_clean = href_clean = request.get_full_path()
+        image_filter = 'hot'
+    print href_clean
     content_dict = {}
     category = Category.objects.get(slug=tilde_slug)
     all_images = Image.objects.filter(category=category)
-    p = Paginator(all_images,16,allow_empty_first_page=False)
 
+    #Top/hot/new hyperlinks
+    content_dict['hot_hyperlink'] = href_clean + 'hot/1/'
+    content_dict['new_hyperlink'] = href_clean + 'new/1/'
+    content_dict['top_hyperlink'] = href_clean + 'top/1/'
+
+    #New images
+    if image_filter == "new":
+        filtered_images = all_images.order_by('upload_date')
+        content_dict['page_header'] = 'New images uploaded to ' + category.name
+
+    #Top images
+    elif image_filter == "top":
+        filtered_images = all_images.order_by('-liked')
+        content_dict['page_header'] = 'Top images on all of' + category.name
+    #Hot images
+    else:
+        current_datetime = datetime.now()
+        #Gets the images in the last 12 hours and orders them by descending order
+        twelve_hours_ago = current_datetime - timedelta(hours = 12)
+        filtered_images = all_images.filter(upload_date__gte=twelve_hours_ago).order_by('-liked')
+        content_dict['page_header'] = 'Popular on '+ category.name+' right now!'
+
+    p = Paginator(filtered_images,16, allow_empty_first_page=False);
+    
     try:
         content_dict['page_header'] = category.name
     except Category.DoesNotExist:
