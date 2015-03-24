@@ -233,6 +233,7 @@ def like_category(request):
     if created:
         likes = str(int(likes)+1)
         img.likes = likes
+        img.save()
 
     return HttpResponse(likes)
 
