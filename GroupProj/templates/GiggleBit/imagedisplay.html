@@ -26,17 +26,16 @@
         {% endif %}
         <br>
         <div class='row'>
-			<center>
-				{% if next_page %}
-					<div class="col-md-3 col-sm-6 col-xs-6 col-centered">
+				<div class="col-md-12 col-sm-12 col-xs-12 page-links">
+					<p><
+					{% if last_page %}
+						<a href="{{last_page}}">Last Page</a>
+					{% endif %}
+					|
+					{% if next_page %}
 						<a href="{{next_page}}">Next Page</a>
-					</div>
-				{% endif %}
-				{% if last_page %}
-				<div class="col-md-3 col-sm-6 col-xs-6 col-centered">
-					<a href="{{last_page}}">Last Page</a>
+					{% endif %}
+					></p>
 				</div>
-				{% endif %}
-			</center>
         </div>
 {% endblock %}

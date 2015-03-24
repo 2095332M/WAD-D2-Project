@@ -166,6 +166,6 @@ body {
 	overflow: hidden;
 }
 
-
-
-
+.page-links {
+	text-align: center;
+}
