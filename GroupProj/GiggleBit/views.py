@@ -26,15 +26,23 @@ def index(request,page=1):
     #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /tilde/
     #removes ajax search string
     stripped_href = request.get_full_path()[:request.get_full_path().rfind('?')]
+
+
+
     #Of the form /gigglebit/<hot,top,new>/
-    href_clean = stripped_href[:stripped_href[:-1].rfind("/") + 1]
-    image_filter = href_clean[-4:-1]
+    if len(stripped_href) > 0:
+        href_clean = stripped_href[:stripped_href[:-1].rfind("/") + 1]
+        image_filter = href_clean[-4:-1]
+        href_clean = href_clean[:-4]
+    else:
+        image_filter = 'hot'
+        href_clean = '/gigglebit/'
     content_dict = {}
 
     #Top/hot/new hyperlinks
-    content_dict['hot_hyperlink'] = href_clean[:-4] + 'hot/1/'
-    content_dict['new_hyperlink'] = href_clean[:-4] + 'new/1/'
-    content_dict['top_hyperlink'] = href_clean[:-4] + 'top/1/'
+    content_dict['hot_hyperlink'] = href_clean + 'hot/1/'
+    content_dict['new_hyperlink'] = href_clean + 'new/1/'
+    content_dict['top_hyperlink'] = href_clean + 'top/1/'
     
     #New images
     if image_filter == "new":
@@ -79,7 +87,7 @@ def index(request,page=1):
 def tilde(request,tilde_slug,page=1):
     #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /
     #Removes ajax search strings
-    stripped_href = request.get_full_path()[:request.get_full_path.rfind('?')]
+    stripped_href = request.get_full_path()[:request.get_full_path().rfind('?')]
     if(stripped_href.count('/') > 4):
         #/gigglebit/tilde/<tildename>/<top,new,hot>/<pageno>/ becomes /tilde/<tn>/<t,h,n>/
         href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
