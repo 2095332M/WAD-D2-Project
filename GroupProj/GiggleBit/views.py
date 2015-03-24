@@ -24,8 +24,10 @@ from datetime import datetime, timedelta
 #super sick home page
 def index(request,page=1):
     #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /tilde/
-    #Of the form /gigglebit/<hot,top,new>/<page_no>
-    href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
+    #removes ajax search string
+    stripped_href = request.get_full_path()[:request.get_full_path().rfind('?')]
+    #Of the form /gigglebit/<hot,top,new>/
+    href_clean = stripped_href[:stripped_href[:-1].rfind("/") + 1]
     image_filter = href_clean[-4:-1]
     content_dict = {}
 
@@ -75,8 +77,10 @@ def index(request,page=1):
 
 #similar/same as /category/ in rango
 def tilde(request,tilde_slug,page=1):
-    #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /tilde/
-    if(request.get_full_path().count('/') > 4):
+    #Removes the last "/" and then find the last / in the url then removes everything past that, i.e /tilde/2344/ becomes /
+    #Removes ajax search strings
+    stripped_href = request.get_full_path()[:request.get_full_path.rfind('?')]
+    if(stripped_href.count('/') > 4):
         #/gigglebit/tilde/<tildename>/<top,new,hot>/<pageno>/ becomes /tilde/<tn>/<t,h,n>/
         href_clean = request.get_full_path()[:request.get_full_path()[:-1].rfind("/") + 1]
         image_filter = href_clean[-4:-1]
@@ -233,19 +237,6 @@ def submit_comment(request):
 
     return redirect("/gigglebit/image/" + image.slug)
 
-def get_category_list(max_results=0, starts_with=''):
-    cat_list = []
-    if starts_with:
-        cat_list = Category.objects.filter(name__istartswith=starts_with)
-
-
-    if max_results > 0:
-        if len(cat_list) > max_results:
-            cat_list = cat_list[:max_results]
-            
-    return cat_list
-
-
 def suggest_category(request):
 
     cat_list = []
@@ -254,7 +245,7 @@ def suggest_category(request):
         starts_with = request.GET['suggestion']
     cat_list = get_category_list(10, starts_with)
 
-    return render(request, 'GiggleBit/catlist.html', {'cat_list': cat_list})
+    return render(request, 'GiggleBit/cats.html', {'cat_list': cat_list})
 
 def bad_url(request):
 	return render(request, 'rango/badpage.html')
