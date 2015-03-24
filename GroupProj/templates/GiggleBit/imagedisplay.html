@@ -27,15 +27,17 @@
         <br>
         <div class='row'>
 				<div class="col-md-12 col-sm-12 col-xs-12 page-links">
-					<p><
-					{% if last_page %}
-						<a href="{{last_page}}">Last Page</a>
+					{% if display_page_links %}
+						<p><
+						{% if last_page %}
+							<a href="{{last_page}}">Last Page</a>
+						{% endif %}
+						|
+						{% if next_page %}
+							<a href="{{next_page}}">Next Page</a>
+						{% endif %}
+						></p>
 					{% endif %}
-					|
-					{% if next_page %}
-						<a href="{{next_page}}">Next Page</a>
-					{% endif %}
-					></p>
 				</div>
         </div>
 {% endblock %}

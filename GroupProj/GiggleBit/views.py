@@ -48,6 +48,7 @@ def index(request,page=1):
 			content_dict['not_mod4'] = 'True'
         if(p.page(page).has_next()):
             content_dict['next_page'] = href_clean + str(int(page) + 1)
+            content_dict['display_page_links'] = True
     except EmptyPage:
         if page == "1":
             content_dict['error_message'] = 'There are no images to display, sorry!'
@@ -58,6 +59,7 @@ def index(request,page=1):
     content_dict['page_header'] = 'Popular on gigglebit today'
     if page > "1":
         content_dict['last_page'] = href_clean + str(int(page) - 1)
+        content_dict['display_page_links'] = True
     return render(request,'GiggleBit/imagedisplay.html', content_dict)
 
 #similar/same as /category/ in rango
@@ -77,14 +79,18 @@ def tilde(request,tilde_slug,page=1):
     try:
         content_dict['new_images'] = p.page(page)
         if((not (p.page(page).end_index() + 1 ) /4 == 0)):
-		    content_dict['not_mod4'] = 'True'
+	    content_dict['not_mod4'] = 'True'
         if(p.page(page).has_next()):
             content_dict['next_page'] = href_clean + str(int(page) + 1)
+	    content_dict['display_page_links'] = True
     except EmptyPage:
         if page == "1":
             content_dict['error_message'] = 'There are no images to display, sorry!'
         else:
             return redirect(href_clean + str(p.num_pages))
+	if page > "1":
+            content_dict['last_page'] = href_clean + str(int(page) - 1)
+            content_dict['display_page_links'] = True
     return render(request,'GiggleBit/imagedisplay.html', content_dict)
 
 
