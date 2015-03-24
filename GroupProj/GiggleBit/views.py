@@ -144,14 +144,16 @@ def about(request):
 def register_profile(request):
     if request.method == 'POST':
         profile_form = UserProfileForm(request.POST)
+        print profile_form
         if profile_form.is_valid():
             if request.user.is_authenticated():
-                profile = profile_form.save(commit=False)
                 user = User.objects.get(id=request.user.id)
+                profile = profile_form.save(commit=False)
                 profile.user = user
-                profile.picture = request.FILES['picture']
+                if 'profile_picture' in request.FILES:
+                    profile.picture = request.FILES['picture']
                 profile.save()
-        return index(request)
+        return redirect('/gigglebit/')
     else:
         form = UserProfileForm(request.GET)
         return render(request, 'GiggleBit/profile_registration.html', {'profile_form': form})
