@@ -29,23 +29,24 @@ def populate():
     wad = add_cat("wad",2)
     
     #Images
-    macbroken = add_image("When a mac breaks",Dylan,[maccirclejerk],"macbroken.jpg")
-    macforchildren = add_image("Mac is for children, lol.", Dylan,[maccirclejerk],"macforchildren.jpg")
-    macbin = add_image("What a mac pro should be used for", Stephen,[maccirclejerk], "macbin.jpg")
+    macbroken = add_image("When a mac breaks",Dylan,[maccirclejerk],"macbroken.jpg",likes=2)
+    macforchildren = add_image("Mac is for children, lol.", Dylan,[maccirclejerk],"macforchildren.jpg",likes=1)
+    macbin = add_image("What a mac pro should be used for", Stephen,[maccirclejerk], "macbin.jpg",likes=1)
     
-    linuxsudo = add_image("I love sudo", Stuart,[linux], "linuxsudo.jpg")
-    linuxbuild = add_image("Mac is so much better for this very reason", Kelvin,[linux,mac],"linuxbuild.jpg")
+    linuxsudo = add_image("I love sudo", Stuart,[linux], "linuxsudo.jpg",likes=1)
+    linuxbuild = add_image("Mac is so much better for this very reason", Kelvin,[linux,mac],"linuxbuild.jpg",likes=1)
     
-    bugs = add_image("When you're developing your WAD project", Stuart, [wad],"bugs.jpg")
-    compiledcode = add_image("That feeling", Kelvin,[wad], "compiledcode.jpg")
+    bugs = add_image("When you're developing your WAD project", Stuart, [wad],"bugs.jpg",likes=2)
+    compiledcode = add_image("That feeling", Kelvin,[wad], "compiledcode.jpg",likes=1)
     hiddensemicolon = add_image("I've spent too much time trying to find the champ", Dylan,[wad],"hiddensemicolon.jpg")
-    
-    windowslinuxmac = add_image("Hate us", Stephen,[windows,linux,mac,maccirclejerk],"windowslinuxmac.jpg")
-    maclinuxwindows = add_image("1000 pounds wasted", Dylan, [windows,linux,mac,maccirclejerk],"maclinuxwindows.jpg")
+	
+	
+    maclinuxwindows = add_image("1000 pounds wasted", Dylan, [windows,linux,mac,maccirclejerk],"maclinuxwindows.jpg",likes=0)
+    windowslinuxmac = add_image("Hate us", Stephen,[windows,linux,mac,maccirclejerk],"windowslinuxmac.jpg",likes=2)
     
     
     #Likes
-    
+    # Macbroken - 2 macbin - 1 , windowslinuxmac -2 , bugs -2, compiled code-1, linuxbuild -1, linuxsudo-1,macforchildren-1,hiddensemicolon-1
     add_like(Dylan,macbroken)
     add_like(Dylan,macbin)
     add_like(Dylan,windowslinuxmac)
@@ -104,8 +105,8 @@ def add_user(username,password,bio="test",profile_pic= "test.jpg"):
     up = Userprofile.objects.get_or_create(user=u, profile_pic=image_loc + profile_pic, bio=bio)[0]
     return up
 
-def add_image(name,uploader,categories, filename,views =0):
-    i = Image.objects.get_or_create(name=name,uploader=uploader,picture = image_loc + filename, views=views,upload_date = datetime.now() )[0]
+def add_image(name,uploader,categories, filename,views =0, likes =0):
+    i = Image.objects.get_or_create(name=name,uploader=uploader,picture = image_loc + filename, views=views,upload_date = datetime.now(), likes = likes )[0]
     for category in categories:
         i.category.add(category)
     return i
@@ -122,6 +123,7 @@ def add_like(user,image):
 def add_fav_category(user,cat):
     fc = Fav_category.objects.get_or_create(user=user,category=cat)
     return fc
+
 
 # Start execution here!
 if __name__ == '__main__':
