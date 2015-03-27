@@ -21,11 +21,18 @@
 		<div>Uploader: {{ image.uploader.user.username }}</div>
         <div class="pull-right">
             {% if user.is_authenticated %}
-            <button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-default" type="button" onClick='clicked_liked()'>
-                <span class="glyphicon glyphicon-thumbs-up"></span>
-                Like
-            </button>
-            {% endif %}
+				{% if not_liked %}
+				<button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-default" type="button" onClick='clicked_liked()'>
+					<span class="glyphicon glyphicon-thumbs-up"></span>
+					Like
+				</button>
+				{% else %}
+				<button id="likes" data-imgid="{{image.id}}" data-userid="{{user.id}}" data-likes="{{ likes_count }}" class="btn btn-default" type="button" onClick='clicked_liked()' disabled>
+					<span class="glyphicon glyphicon-thumbs-up"></span>
+					Like
+				</button>
+				{% endif %}
+			{% endif %}
         </div>
         <div>
             {% if tildes %}

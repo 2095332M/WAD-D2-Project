@@ -20,6 +20,7 @@
                         <div class="thumb"><a href="{% url 'image'  image.slug %}"><img src="{{image.picture.url}}" height = "200"class = " img-responsive" alt="IMG"></a></div>
 						<div class="caption">
 							{{image.name}}<br>
+							Likes: {{image.likes}}<br>
 							{% for tilde in image.category.all|slice:":3" %}
 								<a href="{% url 'tilde'  tilde.slug %}">~{{ tilde.name }}</a>
 							{% endfor %}

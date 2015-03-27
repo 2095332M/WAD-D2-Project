@@ -46,7 +46,7 @@ def index(request,page=1):
 
     #New images
     if image_filter == "new":
-        filtered_images = Image.objects.order_by('upload_date')
+        filtered_images = Image.objects.order_by('-upload_date')
         content_dict['page_header'] = 'New images uploaded to GiggleBit'
 
     #Top images
@@ -167,7 +167,7 @@ def add_image(request):
 			for category in categories:
 				image.category.add(category)
 
-		return index(request)
+		return redirect('/gigglebit/')
     else:
         image_form = ImageForm()
 
@@ -179,6 +179,14 @@ def add_image(request):
 def image(request,image_slug):
     content_dict = {}
     image = Image.objects.get(slug=image_slug)
+    try:
+        user = User.objects.get(id=request.user.id)
+        userprofile = Userprofile.objects.get(user=user)
+        if len(Liked.objects.filter(image=image,user=userprofile)) == 0:
+            content_dict['not_liked'] = True
+            
+    except:
+        pass
     content_dict['tildes'] = image.category.all()
     content_dict["image"] = image
     content_dict["comments"] = Comment.objects.filter(image=image)

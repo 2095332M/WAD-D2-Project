@@ -83,7 +83,7 @@ color: #000000 !important;
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-color: #000000 !important;
+color: #4791FF !important;
 background-color: #4791FF;
 }
 /*
@@ -94,6 +94,10 @@ padding: 20px;
 color: #000000;
 background-color: #FFFFFF;
 }
+.main a{
+color:#4791FF
+}
+
 @media (min-width: 768px) {
 .main {
 padding-right: 40px;
@@ -142,6 +146,7 @@ overflow: hidden;
 }
 .thumb a {
 overflow: hidden;
+color: #FF0000;
 }
 .page-links {
 text-align: center;
