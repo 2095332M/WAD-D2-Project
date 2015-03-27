@@ -21,7 +21,6 @@ def populate():
     Stuart = add_user("Stuart","abc", "You're a douche if you make your own bio", "stuart.jpg")
     Stephen = add_user("Stephen","def","I'm a ghost!", "test.jpg")
     Test1 = add_user("Test","test","Test user", "test.jpg")
-    Test2 = add_user("test","test","Test user", "test.jpg")
     
     #Categories
     linux = add_cat("linux", 10)
