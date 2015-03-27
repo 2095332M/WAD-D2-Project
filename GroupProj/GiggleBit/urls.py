@@ -3,7 +3,6 @@ from GiggleBit import views
 
 urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
-        url(r'(?P<page>\d+)/$', views.index, name='index'),
 		url(r'^top/(?P<page>\d+)/$', views.index, name='index'),
         url(r'^hot/(?P<page>\d+)/$', views.index, name='index'),
         url(r'^new/(?P<page>\d+)/$', views.index, name='index'),

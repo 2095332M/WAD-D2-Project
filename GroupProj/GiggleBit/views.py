@@ -77,7 +77,6 @@ def index(request,page=1):
             return redirect('/gigglebit/' + str(p.num_pages) + '/')
 
 
-    content_dict['page_header'] = 'Popular on gigglebit today'
     if page > "1":
         content_dict['last_page'] = href_clean + str(int(page) - 1)
         content_dict['display_page_links'] = True
