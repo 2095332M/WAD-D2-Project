@@ -19,8 +19,6 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('registration.backends.simple.urls')),
 )
 
-handler404 = 'GiggleBit.views.bad_url'
-handler500 = 'GiggleBit.views.bad_url'
 
 if settings.DEBUG:
     urlpatterns += patterns(
