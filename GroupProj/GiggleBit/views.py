@@ -30,7 +30,7 @@ def index(request,page=1):
 
 
     #Of the form /gigglebit/<hot,top,new>/
-    if len(stripped_href) > 0:
+    if stripped_href.count('/') > 4:
         href_clean = stripped_href[:stripped_href[:-1].rfind("/") + 1]
         image_filter = href_clean[-4:-1]
         href_clean = href_clean[:-4]
@@ -264,5 +264,3 @@ def suggest_category(request):
 
     return render(request, 'GiggleBit/cats.html', {'cat_list': cat_list})
 
-def bad_url(request):
-	return render(request, 'rango/badpage.html')
